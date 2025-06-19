@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"s-hive.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="目标：  理解数据结构中辅助链表的使用。 有使用测试和测试驱动开发来评估自己数据结构正确性的经验。  我参考的结构： 这个proj1a 整体不难，这个结构挺有意思的，我在写python 的时候用的结构都是头尾两个sentinel节点，第一次实现这个结构，发现这个结构更加优雅简单。  JUnit Tests you’ll need to create a Node class and introdu">
+<meta property="og:type" content="website">
+<meta property="og:title" content="proj1a">
+<meta property="og:url" content="https://s-hive.github.io/CS61B/proj1a">
+<meta property="og:site_name" content="S-hive&#39;s portfolio">
+<meta property="og:description" content="目标：  理解数据结构中辅助链表的使用。 有使用测试和测试驱动开发来评估自己数据结构正确性的经验。  我参考的结构： 这个proj1a 整体不难，这个结构挺有意思的，我在写python 的时候用的结构都是头尾两个sentinel节点，第一次实现这个结构，发现这个结构更加优雅简单。  JUnit Tests you’ll need to create a Node class and introdu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250617210149.png">
+<meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250616212809.png">
+<meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250616212818.png">
+<meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250616213051.png">
+<meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250616213103.png">
+<meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250616213139.png">
+<meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250619132929.png">
+<meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250619142148.png">
+<meta property="article:published_time" content="2025-06-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-19T08:03:19.464Z">
+<meta property="article:author" content="Li yalin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s-hive.github.io/images/Pastedimage20250617210149.png">
+
+
+<link rel="canonical" href="https://s-hive.github.io/CS61B/proj1a">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://s-hive.github.io/CS61B/proj1a","path":"CS61B/proj1a.html","title":"proj1a"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>proj1a | S-hive's portfolio
+</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">S-hive's portfolio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-cs61b"><a href="/CS61B/" rel="section"><i class="book fa-fw"></i>CS61B</a></li><li class="menu-item menu-item-debug"><a href="/Debug/" rel="section"><i class="bug fa-fw"></i>Debug</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#JUnit-Tests"><span class="nav-number">1.</span> <span class="nav-text">JUnit Tests</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Writing-and-Verifying"><span class="nav-number">2.</span> <span class="nav-text">Writing and Verifying</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Remaining-Methods"><span class="nav-number">3.</span> <span class="nav-text">The Remaining Methods</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Li yalin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">proj1a<a href="https://github.com/s-hive/s-hive.github.io/tree/main/source/_posts/CS61B/proj1a.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p><strong>目标：</strong></p>
+<ul>
+<li>理解数据结构中辅助链表的使用。</li>
+<li>有使用测试和测试驱动开发来评估自己数据结构正确性的经验。</li>
+</ul>
+<p>我参考的结构：<br><img src="/images/Pastedimage20250617210149.png" alt="Pastedimage20250617210149.png"></p>
+<p>这个<code>proj1a</code> 整体不难，这个结构挺有意思的，我在写<code>python</code> 的时候用的结构都是头尾两个<code>sentinel</code>节点，第一次实现这个结构，发现这个结构更加优雅简单。</p>
+<hr>
+<h3 id="JUnit-Tests"><a href="#JUnit-Tests" class="headerlink" title="JUnit Tests"></a>JUnit Tests</h3><p> you’ll need to create a <code>Node</code> class and introduce one or more instance variables.</p>
+<p>刚开始我希望实现一个基于数组的链表：<br><img src="/images/Pastedimage20250616212809.png" alt="Pastedimage20250616212809.png"><br>提示运行错误：<br><img src="/images/Pastedimage20250616212818.png" alt="[Pastedimage20250616212818.png]"><br>我发现应该是要实现一个双链表结构(认真读题真的很重要)：<br><img src="/images/Pastedimage20250616213051.png" alt="[Pastedimage20250616213051.png]"><br>提示：<br><img src="/images/Pastedimage20250616213103.png" alt="[Pastedimage20250616213103.png]"><br>就是内部类<code>Node</code>不该自己搞泛型，用外部类的泛型，把内部类的泛型声明去掉 ：<br><img src="/images/Pastedimage20250616213139.png" alt="[Pastedimage20250616213139.png]"></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/design-linked-list/submissions/603212018/">707. 设计链表 - 力扣</a>参考了下这个。</p>
+<h3 id="Writing-and-Verifying"><a href="#Writing-and-Verifying" class="headerlink" title="Writing and Verifying"></a>Writing and Verifying</h3><p>下面都是先编写测试，然后实现它，就是“测试驱动开发”。我不详细写了，写一些有意思的：</p>
+<h3 id="The-Remaining-Methods"><a href="#The-Remaining-Methods" class="headerlink" title="The Remaining Methods"></a>The Remaining Methods</h3><p><a target="_blank" rel="noopener" href="https://truth.dev/api/latest/index.html?overview-summary.html">Truth测试库</a><br>这里要求用递归实现<code>get()</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="keyword">public</span> T <span class="title function_">getRecursive</span><span class="params">(<span class="type">int</span> index)</span> &#123;  </span><br><span class="line">        <span class="keyword">if</span> (index &gt;= <span class="built_in">this</span>.length || index &lt; <span class="number">0</span>) &#123;  </span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;  </span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">            List&lt;T&gt; lst = toList();  </span><br><span class="line">            <span class="keyword">return</span> getRecindex(lst,index);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">public</span> T <span class="title function_">getRecindex</span><span class="params">(List&lt;T&gt; lst,<span class="type">int</span> idx)</span> &#123;  </span><br><span class="line">        <span class="keyword">if</span> (idx == <span class="number">0</span>) &#123;  </span><br><span class="line">            <span class="keyword">return</span> lst.get(idx);  </span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;  </span><br><span class="line">            List&lt;T&gt; newLst = lst.subList(<span class="number">1</span>,lst.size());  </span><br><span class="line">            getRecindex(newLst,idx-<span class="number">1</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后测试一直返回<code>null</code>:<br><img src="/images/Pastedimage20250619132929.png" alt="[Pastedimage20250619132929.png]"><br>其实是老毛病了，写<code>python</code>的时候也经常犯，递归调用的返回值被直接丢弃了，方法最终会执行 return null;。因此，无论递归过程中是否正确找到了目标元素，最终都会返回 null。  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span>  </span><br><span class="line"><span class="keyword">public</span> T <span class="title function_">getRecursive</span><span class="params">(<span class="type">int</span> index)</span> &#123;  </span><br><span class="line">    <span class="keyword">if</span> (index &gt;= <span class="built_in">this</span>.length || index &lt; <span class="number">0</span>) &#123;  </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;  </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">        List&lt;T&gt; lst = toList();  </span><br><span class="line">        <span class="keyword">return</span> getRecindex(lst,index);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">public</span> T <span class="title function_">getRecindex</span><span class="params">(List&lt;T&gt; lst,<span class="type">int</span> idx)</span> &#123;  </span><br><span class="line">    <span class="keyword">if</span> (idx == <span class="number">0</span>) &#123;  </span><br><span class="line">        <span class="keyword">return</span> lst.get(idx);  </span><br><span class="line">    &#125;<span class="keyword">else</span> &#123;  </span><br><span class="line">        List&lt;T&gt; newLst = lst.subList(<span class="number">1</span>,lst.size());  </span><br><span class="line">        <span class="comment">// getRecindex(newLst,idx-1); </span></span><br><span class="line">        <span class="keyword">return</span> getRecindex(newLst,idx-<span class="number">1</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后放个胜利结算画面<br><img src="/images/Pastedimage20250619142148.png" alt="[Pastedimage20250619142148.png]"></p>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Li yalin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
