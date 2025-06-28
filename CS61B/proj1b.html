@@ -27,7 +27,7 @@
 <meta property="og:description" content="本来没打算写这篇博客的，但是这里的扩&#x2F;缩容挺有意思的，于是就简单写写  目标：   理解数据结构中后备数组的实现。 通过测试和测试驱动开发来验证这些数据结构的正确性，获得更多经验。  这次的proj就是实现一个循环数组，这里不放图了  Resizing Up扩&#x2F;缩容的底层逻辑就是新建一个数组，把旧数组的数据迁移过去就好了。不过我写的不太优雅，这里不多解释，只是浅浅提一下要注意">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-06-26T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-06-28T03:36:10.706Z">
+<meta property="article:modified_time" content="2025-06-28T03:49:24.696Z">
 <meta property="article:author" content="Li yalin">
 <meta name="twitter:card" content="summary">
 
@@ -208,19 +208,19 @@
 <li><code>this.nextLast = ... ; this.nextFirst = ... ;</code>： 注意要改,最好和声明时保持一致，不然测试很麻烦</li>
 </ul>
 <pre><code class="java">// 缩容
-if ((((double)this.lst.length / this.size) &gt; 3) &amp;&amp; this.size != 0) &#123;  
-    int num = Math.max(this.lst.length / 2 ,3);  
-    T[] lst2 = (T[]) new Object[num];  
-    for (int i = 0; i &lt;= this.size; i++)&#123;  
-        lst2[i] = this.lst[Math.floorMod((this.nextFirst + 1 + i),this.lst.length)];  
-    &#125;  
-    this.lst = lst2;  
-    lst2 = null;  
-    this.nextLast = this.size;  
-    this.nextFirst = this.lst.length - 1;  
+if (((double)this.lst.length / this.size) &gt; 3) &#123;
+    int num = Math.max(this.lst.length / 2 ,3);
+    T[] lst2 = (T[]) new Object[num];
+    for (int i = 1; i &lt;= this.size + 1; i++) &#123;
+        lst2[i] = this.lst[Math.floorMod((this.nextFirst + i),this.lst.length)];
+    &#125;
+    this.lst = lst2;
+    lst2 = null;
+    this.nextLast = this.size + 1;
+    this.nextFirst = 0;
 &#125;```
 
-* 这里和上面扩容差不多，就不多写了
+* 这里上面扩容差不多，就不多写了
 </code></pre>
 
       </div>
