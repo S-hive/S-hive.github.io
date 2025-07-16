@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"s-hive.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="服务器应该是冷冰冰的大铁柜，在恒温恒湿的机房里待着，所以Tomcat是什么呢，为什么也叫服务器呢？ 我们为什么需要服务器？在我看来，服务器最本质的作用有两个：  将资源对外暴露 配合各种传输协议进行响应输出  假设现在有个问题：  给你两台电脑，不通过蓝牙&#x2F;QQ&#x2F;微信，也不通过网盘或USB等可移动设备做中介，你要如何把一张图片从一台电脑传到另一台？   听到这个问题，我估计大部">
+<meta property="og:type" content="website">
+<meta property="og:title" content="为什么称Tomcat为服务器？">
+<meta property="og:url" content="https://s-hive.github.io/Serve/%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%B0Tomcat%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9F">
+<meta property="og:site_name" content="S-hive&#39;s portfolio">
+<meta property="og:description" content="服务器应该是冷冰冰的大铁柜，在恒温恒湿的机房里待着，所以Tomcat是什么呢，为什么也叫服务器呢？ 我们为什么需要服务器？在我看来，服务器最本质的作用有两个：  将资源对外暴露 配合各种传输协议进行响应输出  假设现在有个问题：  给你两台电脑，不通过蓝牙&#x2F;QQ&#x2F;微信，也不通过网盘或USB等可移动设备做中介，你要如何把一张图片从一台电脑传到另一台？   听到这个问题，我估计大部">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picx.zhimg.com/50/v2-aac37732401f6a92d61e7e7887a3ace5_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pica.zhimg.com/50/v2-9426b26e3fc6b83d059219f332709e7b_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pic1.zhimg.com/50/v2-9e08ae4c572d55eb4c6e652f14902496_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://picx.zhimg.com/50/v2-1ebb772d4f718d6a2fefac68bb1a15d4_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pica.zhimg.com/50/v2-8aa4aa66f571b33062fd1274f2043fa8_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://picx.zhimg.com/50/v2-47a7ba9165e0081e5c6dea7a0bf0423a_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pic1.zhimg.com/50/v2-5af11c448cb3de2311ad91df8578ed3c_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pic1.zhimg.com/50/v2-453c49379a5816d1f19c7f965d721151_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pic1.zhimg.com/50/v2-79d343e2d5d3d5d9574d075aba1e6cd6_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://picx.zhimg.com/50/v2-79ab58d3761d889a07efbaa99e081d19_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pic1.zhimg.com/50/v2-c1761ba4e406196374fb7734966e8f97_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pica.zhimg.com/50/v2-3a892ca4b13c7c22d395d4e7f7b5468f_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pic1.zhimg.com/50/v2-2f0979f08ceb7f64d169676069720bd6_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://picx.zhimg.com/50/v2-3a0b16ad4fbe56db177c72f674988896_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pic1.zhimg.com/50/v2-38f7da8e2645d23d7b89bfe5e6579b93_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://picx.zhimg.com/50/v2-7163a0b73be6115eab0d91098e53204a_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pica.zhimg.com/50/v2-d29651cfbd959e8d4cad551feabc1046_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://pica.zhimg.com/50/v2-07d5a0b4c4aea91562adfe8970a6983b_720w.jpg?source=2c26e567">
+<meta property="og:image" content="https://picx.zhimg.com/50/v2-b58fff7721b59b7f784193041339c499_720w.jpg?source=2c26e567">
+<meta property="article:published_time" content="2025-07-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-16T10:39:58.988Z">
+<meta property="article:author" content="Li yalin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picx.zhimg.com/50/v2-aac37732401f6a92d61e7e7887a3ace5_720w.jpg?source=2c26e567">
+
+
+<link rel="canonical" href="https://s-hive.github.io/Serve/%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%B0Tomcat%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9F">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://s-hive.github.io/Serve/%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%B0Tomcat%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9F","path":"Serve/为什么称Tomcat为服务器？.html","title":"为什么称Tomcat为服务器？"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>为什么称Tomcat为服务器？ | S-hive's portfolio
+</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">S-hive's portfolio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-cs61b"><a href="/CS61B/" rel="section"><i class="book fa-fw"></i>CS61B</a></li><li class="menu-item menu-item-debug"><a href="/Debug/" rel="section"><i class="bug fa-fw"></i>Debug</a></li><li class="menu-item menu-item-serve"><a href="/Serve/" rel="section"><i class="book fa-fw"></i>Serve</a></li><li class="menu-item menu-item-数据结构"><a href="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="section"><i class="book fa-fw"></i>数据结构</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">我们为什么需要服务器？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E4%B8%AA%E5%AE%B9%E6%98%93%E6%B7%B7%E6%B7%86%E7%9A%84%E5%B0%8F%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">3个容易混淆的小概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%A6%82%E5%BF%B5%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%92%8C%E7%A1%AC%E4%BB%B6%E6%A6%82%E5%BF%B5%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.1.</span> <span class="nav-text">软件概念的服务器和硬件概念的服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9FWeb%E5%AE%B9%E5%99%A8%EF%BC%9F"><span class="nav-number">2.2.</span> <span class="nav-text">Web服务器？Web容器？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E5%BC%80%E5%8F%91%E7%9A%84Web%E5%BA%94%E7%94%A8%E9%83%BD%E6%98%AF%E5%8D%8A%E6%88%90%E5%93%81%EF%BC%81"><span class="nav-number">2.3.</span> <span class="nav-text">我们开发的Web应用都是半成品！</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8A%A8%E6%80%81%E8%B5%84%E6%BA%90%EF%BC%9F"><span class="nav-number">3.</span> <span class="nav-text">什么是动态资源？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%89%8B%E5%AE%9E%E7%8E%B0%E2%80%9DTomcat%E2%80%9D"><span class="nav-number">4.</span> <span class="nav-text">动手实现”Tomcat”</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Li yalin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">为什么称Tomcat为服务器？<a href="https://github.com/s-hive/s-hive.github.io/tree/main/source/_posts/Serve/%E4%B8%BA%E4%BB%80%E4%B9%88%E7%A7%B0Tomcat%E4%B8%BA%E6%9C%8D%E5%8A%A1%E5%99%A8%EF%BC%9F.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>服务器应该是冷冰冰的大铁柜，在恒温恒湿的机房里待着，所以Tomcat是什么呢，为什么也叫服务器呢？</p>
+<h2 id="我们为什么需要服务器？"><a href="#我们为什么需要服务器？" class="headerlink" title="我们为什么需要服务器？"></a><strong>我们为什么需要服务器？</strong></h2><p>在我看来，服务器最本质的作用有两个：</p>
+<ul>
+<li>将资源对外暴露</li>
+<li>配合各种传输协议进行响应输出</li>
+</ul>
+<p>假设现在有个问题：</p>
+<blockquote>
+<p>给你两台电脑，不通过蓝牙&#x2F;QQ&#x2F;微信，也不通过网盘或USB等可移动设备做中介，你要如何把一张图片从一台电脑传到另一台？</p>
+</blockquote>
+<p><img src="https://picx.zhimg.com/50/v2-aac37732401f6a92d61e7e7887a3ace5_720w.jpg?source=2c26e567"></p>
+<p>听到这个问题，我估计大部分非科班的朋友都要懵。因为如果后期没有刻意去学习计算机网络，我们对于网络的了解基本仅限于基础班4小时的“网络编程”讲解。而大家平时又太习惯地址栏键入”<a href="https://link.zhihu.com/?target=http://www.baidu.com/">www.baidu.com</a>“，无脑一回车就上网冲浪了。现在突然让你去访问隔壁的电脑，确实有点束手无策。</p>
+<p>解决这个问题的方法可能有多种，这里介绍其中一种：通过服务器访问。</p>
+<p>请先了解以下三个概念：</p>
+<ul>
+<li>IP：电子设备（计算机）在网络中的唯一标识，一个IP对应一台<strong>实体</strong>电脑</li>
+<li>端口：应用程序在计算机中的唯一标识，一个端口只能被唯一程序占用</li>
+<li>传输协议：数据传输的规则</li>
+</ul>
+<p>中国有14亿人口，每个人都有唯一的身份标识：身份证，用以精确定位某个个体。同样的，网络上有几十亿台电脑，每台电脑都有自己的一串特有IP（不同局域网内可以相同），也就是说一个IP代表一台特定的<strong>实体</strong>电脑。比如《唐伯虎点秋香》中华安的编号是9527，而华府的管家从不叫他名字，而是直接喊“9527”。因为“9527”就是华安。</p>
+<p><img src="https://pica.zhimg.com/50/v2-9426b26e3fc6b83d059219f332709e7b_720w.jpg?source=2c26e567"></p>
+<p>虽然根据IP可以精准定位一台电脑，但是还不足以让我们访问这台电脑。就好比你知道了我的门牌号，但是我没给你开门。所谓的门，就是一个端口，而端口的背后是应用程序。</p>
+<p>一般来说，一个端口可以定位一个软件，但一个软件可以占用多个端口（你家的门，只属于你家，但可以有前后门）。在现实生活中，你家的门如果被别人占用了或者堵了，客人（请求）就进不去了。而在程序中，如果有两个程序的端口相同，就会发生端口冲突，也就是所谓的“端口占用”。端口占用的后果往往是程序无法启动，更遑论运行。</p>
+<p>关于端口，再举个例子：</p>
+<p>微信和QQ都是腾讯公司的，你的电脑上同时装了这两个软件。为什么我用QQ给你发消息，你的微信收不到？正常人看起来很傻的问题，实际上并不是那么简单。</p>
+<p><img src="https://pic1.zhimg.com/50/v2-9e08ae4c572d55eb4c6e652f14902496_720w.jpg?source=2c26e567"></p>
+<p>每个应用程序都有自己的端口号（可能有多个），它们一旦运行，就要去监听这些端口。每个程序都是电脑的囚犯，看不到外面的世界，而端口就是给这些囚犯送饭的窗口。应用程序们整天躲在电脑里盯着自己的端口们，祈求着别的计算机来访时能送个大鸡腿(Request请求)。</p>
+<p>其实QQ这些软件属于C&#x2F;S架构，已经为我们屏蔽了太多底层，什么IP、端口全部都是自动封装的。相比来说，B&#x2F;S架构更直观一些。比如用浏览器访问百度：</p>
+<p><img src="https://picx.zhimg.com/50/v2-1ebb772d4f718d6a2fefac68bb1a15d4_720w.jpg?source=2c26e567"></p>
+<p>不知道有没有细心的朋友注意到了下面的细节：</p>
+<p><img src="https://pica.zhimg.com/50/v2-8aa4aa66f571b33062fd1274f2043fa8_720w.jpg?source=2c26e567"></p>
+<p>即使DNS解析域名得到对应的IP后，Request请求里还是会带上host。为什么？</p>
+<p><strong>因为：域名!&#x3D;IP。</strong></p>
+<p>实际上一个IP可以对应多个域名。也就是说<strong>一台实体服务器（大铁柜）</strong>，理论上可以有<strong>多个域名（虚拟主机）。</strong>实体服务器和网站是两个概念。<strong>IP只是对应实体服务器，而域名对应具体的网站。</strong></p>
+<p>比如上面百度服务器，虽然看起来115.239.210.27这个IP完全等同于<a href="https://link.zhihu.com/?target=http://www.baidu.com">http://www.baidu.com</a>，但也有可能这个IP对应的服务器上配置了两个虚拟主机：<a href="https://link.zhihu.com/?target=http://www.baidu.com/">www.baidu.com</a>和<a href="https://link.zhihu.com/?target=http://tieba.baidu.com/">tieba.baidu.com</a>。所以即使找到了IP对应的服务器实体，Request请求还是要带上host主机名，以确定是哪个虚拟主机。</p>
+<p><img src="https://picx.zhimg.com/50/v2-47a7ba9165e0081e5c6dea7a0bf0423a_720w.jpg?source=2c26e567"></p>
+<p>另外，如果两个域名对应同一个IP，那么必须设置其中一个域名为默认的，不然同一台服务器有两个虚拟主机，我该访问谁？</p>
+<p><img src="https://pic1.zhimg.com/50/v2-5af11c448cb3de2311ad91df8578ed3c_720w.jpg?source=2c26e567"></p>
+<p>最后，再用Tomcat举个例子。比如，现在我有一台笔记本电脑（一个实体服务器），它的本机IP是192.168.112.1，我在上面装了Tomcat。如果Tomcat不改动配置，则默认只有一个虚拟主机localhost（默认主机）。接着我开发了一个JavaWeb程序demo1部署到Tomcat，然后我同事在浏览器输入下方地址</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">192.168.112.1:8080/demo1/index.html</span><br></pre></td></tr></table></figure>
+
+<p>访问我的电脑。虽然没有带host，但是localhost是默认的，于是访问它。</p>
+<p><img src="https://pic1.zhimg.com/50/v2-453c49379a5816d1f19c7f965d721151_720w.jpg?source=2c26e567"></p>
+<p>最后必须解释的是，上面的百度服务器只是举个例子，实际上百度搜索和百度贴吧的IP是不同的，也就是说它们不在同一台服务器上。通常来说，一个IP对应一台服务器，服务器上只有一个主机。拿到IP基本就可以确定要访问哪个网站。</p>
+<p><img src="https://pic1.zhimg.com/50/v2-79d343e2d5d3d5d9574d075aba1e6cd6_720w.jpg?source=2c26e567"></p>
+<p><img src="https://picx.zhimg.com/50/v2-79ab58d3761d889a07efbaa99e081d19_720w.jpg?source=2c26e567"></p>
+<hr>
+<h2 id="3个容易混淆的小概念"><a href="#3个容易混淆的小概念" class="headerlink" title="3个容易混淆的小概念"></a><strong>3个容易混淆的小概念</strong></h2><p>我们经常开口闭口“服务器”、“服务器”的，其实“服务器”是个很容易引发歧义的概念，我能想到的就有3点：</p>
+<h3 id="软件概念的服务器和硬件概念的服务器"><a href="#软件概念的服务器和硬件概念的服务器" class="headerlink" title="软件概念的服务器和硬件概念的服务器"></a>软件概念的服务器和硬件概念的服务器</h3><p>软件概念上，只要是一台硬件配置正常、装有操作系统、插着电能上网，并且安装特定软件的电脑，都可以称为服务器。比如你要学习数据库了，于是你装了MySQL服务端，那么此时你的电脑就是一个MySQL服务器。然后你又装了SVN服务端，那么此时你的电脑既是MySQL服务器，又是SVN服务器。Tomcat服务器同理。</p>
+<p>硬件概念上，服务器本质上也是一台电脑，只不过配置高的同时长相丑了点，基本就是一个冰冷的大铁柜。我们的笔记本电脑既能看片又能玩游戏，而它们基本上专机专用。</p>
+<h3 id="Web服务器？Web容器？"><a href="#Web服务器？Web容器？" class="headerlink" title="Web服务器？Web容器？"></a>Web服务器？Web容器？</h3><p>其实，Tomcat服务器 &#x3D; Web服务器 + Servlet&#x2F;JSP容器（Web容器）。</p>
+<p>Web服务器的作用是接收客户端的请求，给客户端作出响应。但是很明显，服务器不止静态资源呀，所以客户端发起请求后，如果是动态资源，Web服务器不可能直接把它响应回去（比如JSP），因为浏览器只认识静态资源。所以对于JavaWeb程序而言，还需要JSP&#x2F;Servlet容器，<strong>JSP&#x2F;Servlet容器的基本功能是把动态资源转换成静态资源。</strong>我们JavaWeb工程师需要使用Web服务器和JSP&#x2F;Servlet容器，而通常这两者会集于一身，比如Tomcat。</p>
+<p><img src="https://pic1.zhimg.com/50/v2-c1761ba4e406196374fb7734966e8f97_720w.jpg?source=2c26e567"></p>
+<p>所以刚才我们画的百度服务器，其实细节还可以更丰满些：</p>
+<p><img src="https://pica.zhimg.com/50/v2-3a892ca4b13c7c22d395d4e7f7b5468f_720w.jpg?source=2c26e567"></p>
+<p><img src="https://pic1.zhimg.com/50/v2-2f0979f08ceb7f64d169676069720bd6_720w.jpg?source=2c26e567"></p>
+<h3 id="我们开发的Web应用都是半成品！"><a href="#我们开发的Web应用都是半成品！" class="headerlink" title="我们开发的Web应用都是半成品！"></a>我们开发的Web应用都是半成品！</h3><p>我们写代码的时候，都知道相同代码最好抽取成公共方法以复用。现在我们来想一想，上百上千的Web应用有什么共性吗？首先，资源肯定不同，无法抽取。比如优酷主打视频，知乎基本都是文字。其次，业务也肯定不同，比如百度主要是搜索，淘宝是电商。但是有一点是一样的，这些网站都需要“接收用户请求”+“响应用户请求”。</p>
+<p>嗯？桥多麻袋！！这两个概念，好像哪里见过！不错，就是上面的Web服务器。仔细回想一下，我们开发JavaWeb时，你操心过如何接收HTTP请求和响应HTTP请求吗？显然没有嘛！因为你一直忙着debug。</p>
+<p><strong>所以，我们用Java开发的Web应用只是一个半成品，类似于一个插件</strong>，而服务器则像一个收发器：</p>
+<p><img src="https://picx.zhimg.com/50/v2-3a0b16ad4fbe56db177c72f674988896_720w.jpg?source=2c26e567"></p>
+<hr>
+<h2 id="什么是动态资源？"><a href="#什么是动态资源？" class="headerlink" title="什么是动态资源？"></a><strong>什么是动态资源？</strong></h2><p>其实对于何谓动态资源，我也没有很精准的概念。要讲清楚一个东西是什么，有时是比较难的事。不如先说它不是什么。</p>
+<p>首先，<strong>动态资源不等同于动态页面。</strong>所谓动态页面，就是页面会动，而会动的页面不一定是动态资源。比如我可以用JQuery执行一段代码，让一个Div不断放大缩小，但是很显然它还是一个HTML页面。</p>
+<p><strong>所谓动态资源，其实最显著的特征就是它能动态地生成HTML！</strong>比如JSP。动态资源有个“特色”：它的数据是“可拼装”的、而且“可以随时间变化”。下面用号称可以抗住8个明星同时出轨的新浪服务器举个例子：</p>
+<p><img src="https://pic1.zhimg.com/50/v2-38f7da8e2645d23d7b89bfe5e6579b93_720w.jpg?source=2c26e567"></p>
+<p>突然，新浪《花花世界》专栏的小编发现，原来和bravo1988有绯闻的不是刘亦菲，而是佟丽娅，于是打开专栏做了修改：</p>
+<p><img src="https://picx.zhimg.com/50/v2-7163a0b73be6115eab0d91098e53204a_720w.jpg?source=2c26e567"></p>
+<p>此时，粉丝们再次打开《花花世界》专栏，看到的就是：佟丽娅深夜买醉bravo。</p>
+<p>上面这个例子很好地说明了动态资源（JSP）的两个特性：</p>
+<ul>
+<li>可拼装：${name}”深夜买醉bravo”</li>
+<li>随时间变化：刘亦菲→佟丽娅</li>
+</ul>
+<p>那么为什么说HTML就是静态资源呢？我也可以修改HTML页面使它发生改变啊！很好，很有想法。那么请小编先学会Linux，然后远程连接服务器进入到Tomcat目录下修改吧。</p>
+<p><img src="https://pica.zhimg.com/50/v2-d29651cfbd959e8d4cad551feabc1046_720w.jpg?source=2c26e567"></p>
+<p>动态资源和静态资源虽然都在服务器里，但是动态资源包含变量（“可拼装”特性），而变量维系着数据库和程序之间的联系。</p>
+<p>如果把JSP比作电子广告牌，变量比作一根电线，而电线连接着一台电脑（数据库服务器）。那么只要电脑上重新编辑文本，广告牌的内容也会变，此谓动态。而静态资源就像一张布告，当初写什么就是什么，任他风吹雨打，都不会再改变了。</p>
+<p><img src="https://pica.zhimg.com/50/v2-07d5a0b4c4aea91562adfe8970a6983b_720w.jpg?source=2c26e567"></p>
+<h2 id="动手实现”Tomcat”"><a href="#动手实现”Tomcat”" class="headerlink" title="动手实现”Tomcat”"></a><strong>动手实现”Tomcat”</strong></h2><p>最后，还有个很无聊的问题留给大家思考：JavaSE阶段，我们无论做什么，都是上来先敲main()。学了JavaWeb后，我想问问，你有多久没敲main()了？她去哪了呢？</p>
+<p>动手实现Tomcat（黑马公开课）：</p>
+<p>链接：<a href="https://link.zhihu.com/?target=https://pan.baidu.com/s/1gCWs7Jsr2qtABXQN7HHegw">https://pan.baidu.com/s/1gCWs7Jsr2qtABXQN7HHegw</a> 密码：35se</p>
+<p><img src="https://picx.zhimg.com/50/v2-b58fff7721b59b7f784193041339c499_720w.jpg?source=2c26e567"></p>
+<hr>
+<p>作者：bravo1988<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/391134143/answer/1777384319">https://www.zhihu.com/question/391134143/answer/1777384319</a><br>来源：知乎  </p>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Li yalin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
