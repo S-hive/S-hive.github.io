@@ -19,26 +19,26 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"s-hive.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="数组(顺序存储)基本原理 动态数组代码实现 链表（链式存储）基本原理 链表代码实现">
+    <meta name="description" content="目录和文件这些是 tomcat 的一些关键目录：  &#x2F;bin - 启动、关闭和其他脚本。 *.sh 文件（适用于 Unix 系统）是 *.bat 文件（适用于 Windows 系统）的功能性副本。由于 Win32 命令行缺少某些功能，这里有一些额外的文件。 &#x2F;conf - 配置文件和相关 DTD 文件。这里最重要的文件是 server.xml。它是容器的主配置文件。 &amp;#x2F">
 <meta property="og:type" content="website">
-<meta property="og:title" content="数据结构目录">
-<meta property="og:url" content="https://s-hive.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:title" content="Tomcat基础">
+<meta property="og:url" content="https://s-hive.github.io/Serve/Tomcat%E5%9F%BA%E7%A1%80">
 <meta property="og:site_name" content="S-hive&#39;s portfolio">
-<meta property="og:description" content="数组(顺序存储)基本原理 动态数组代码实现 链表（链式存储）基本原理 链表代码实现">
+<meta property="og:description" content="目录和文件这些是 tomcat 的一些关键目录：  &#x2F;bin - 启动、关闭和其他脚本。 *.sh 文件（适用于 Unix 系统）是 *.bat 文件（适用于 Windows 系统）的功能性副本。由于 Win32 命令行缺少某些功能，这里有一些额外的文件。 &#x2F;conf - 配置文件和相关 DTD 文件。这里最重要的文件是 server.xml。它是容器的主配置文件。 &amp;#x2F">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-07-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-07-24T09:01:05.290Z">
+<meta property="article:published_time" content="2025-07-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-24T09:06:14.168Z">
 <meta property="article:author" content="Li yalin">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://s-hive.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">
+<link rel="canonical" href="https://s-hive.github.io/Serve/Tomcat%E5%9F%BA%E7%A1%80">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://s-hive.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.html","path":"数据结构/index.html","title":"数据结构目录"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://s-hive.github.io/Serve/Tomcat%E5%9F%BA%E7%A1%80","path":"Serve/Tomcat基础.html","title":"Tomcat基础"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>数据结构目录 | S-hive's portfolio
+<title>Tomcat基础 | S-hive's portfolio
 </title>
   
 
@@ -115,7 +115,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -128,6 +128,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E5%92%8C%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">目录和文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CATALINA-HOME-%E5%92%8C-CATALINA-BASE"><span class="nav-number">2.</span> <span class="nav-text">CATALINA_HOME 和 CATALINA_BASE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E4%BD%BF%E7%94%A8-CATALINA-BASE"><span class="nav-number">2.1.</span> <span class="nav-text">为何使用 CATALINA_BASE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CATALINA-BASE-%E7%9A%84%E5%86%85%E5%AE%B9"><span class="nav-number">2.2.</span> <span class="nav-text">CATALINA_BASE 的内容</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -173,7 +174,7 @@
     
     <div class="post-block" lang="zh-CN"><header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">数据结构目录<a href="https://github.com/s-hive/s-hive.github.io/tree/main/source/_posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/index.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+<h1 class="post-title" itemprop="name headline">Tomcat基础<a href="https://github.com/s-hive/s-hive.github.io/tree/main/source/_posts/Serve/Tomcat%E5%9F%BA%E7%A1%80.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
 </h1>
 
 <div class="post-meta-container">
@@ -185,11 +186,29 @@
       
       
       <div class="post-body">
-          <ul>
-<li><a href="%E6%95%B0%E7%BB%84%EF%BC%88%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%82%A8%EF%BC%89%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86">数组(顺序存储)基本原理</a></li>
-<li><a href="%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">动态数组代码实现</a></li>
-<li><a href="%E9%93%BE%E8%A1%A8%EF%BC%88%E9%93%BE%E5%BC%8F%E5%AD%98%E5%82%A8%EF%BC%89%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86">链表（链式存储）基本原理</a></li>
-<li><a href="%E9%93%BE%E8%A1%A8%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">链表代码实现</a></li>
+          <h2 id="目录和文件"><a href="#目录和文件" class="headerlink" title="目录和文件"></a>目录和文件</h2><p>这些是 tomcat 的一些关键目录：</p>
+<ul>
+<li><strong>&#x2F;bin</strong> - 启动、关闭和其他脚本。 <code>*.sh</code> 文件（适用于 Unix 系统）是 <code>*.bat</code> 文件（适用于 Windows 系统）的功能性副本。由于 Win32 命令行缺少某些功能，这里有一些额外的文件。</li>
+<li><strong>&#x2F;conf</strong> - 配置文件和相关 DTD 文件。这里最重要的文件是 server.xml。它是容器的主配置文件。</li>
+<li><strong>&#x2F;logs</strong> - 默认情况下，日志文件存放在这里。</li>
+<li><strong>&#x2F;webapps</strong> - 这里是放置你的 web 应用的目录。</li>
+</ul>
+<h2 id="CATALINA-HOME-和-CATALINA-BASE"><a href="#CATALINA-HOME-和-CATALINA-BASE" class="headerlink" title="CATALINA_HOME 和 CATALINA_BASE"></a>CATALINA_HOME 和 CATALINA_BASE</h2><p>在文档中，提到了以下两个关键环境变量：</p>
+<ul>
+<li><strong>CATALINA_HOME</strong>: 表示你的 Tomcat 安装的根目录，例如 <code>/home/tomcat/apache-tomcat-11.0.0</code>。</li>
+<li><strong>CATALINA_BASE</strong>：表示特定 Tomcat 实例的运行时配置的根目录。如果你想在同一台机器上运行多个 Tomcat 实例，请使用 <code>CATALINA_BASE</code> 属性。</li>
+</ul>
+<p>当为这两个关键环境变量设置不同路径时，<code>CATALINA_HOME</code>存放的是<strong>静态资源</strong>，比如.jar 文件（Java 归档文件）或二进制文件，这些是 Tomcat 运行的基础程序文件，通常不会频繁变动。<br>而<code>CATALINA_BASE</code>则存放<strong>动态或运行时相关的内容</strong>，包括配置文件、日志文件、已部署的应用程序以及其他运行时所需的资源，这些内容会随着 Tomcat 的使用（如配置修改、应用部署、日志生成）而变化。</p>
+<h3 id="为何使用-CATALINA-BASE"><a href="#为何使用-CATALINA-BASE" class="headerlink" title="为何使用 CATALINA_BASE"></a>为何使用 CATALINA_BASE</h3><p>默认情况下，CATALINA_HOME 和 CATALINA_BASE 指向同一个目录。当你需要在同一台机器上运行多个 Tomcat 实例时，手动设置 CATALINA_BASE。这样做有以下好处：</p>
+<ul>
+<li>升级到 Tomcat 新版本的更便捷管理。由于所有具有单一 CATALINA_HOME 位置的实例共享同一套 <code>.jar</code> 文件和二进制文件，你可以轻松地将文件升级到新版本，并通过使用相同 CATALIA_HOME 目录将变更传播到所有 Tomcat 实例。</li>
+<li>避免重复相同的静态 <code>.jar</code> 文件。</li>
+<li>共享某些设置的可能性，例如 <code>setenv</code> shell 或 bat 脚本文件（取决于你的操作系统）。</li>
+</ul>
+<h3 id="CATALINA-BASE-的内容"><a href="#CATALINA-BASE-的内容" class="headerlink" title="CATALINA_BASE 的内容"></a>CATALINA_BASE 的内容</h3><p>在使用 CATALINA_BASE 之前，首先考虑并创建 CATALINA_BASE 所使用的目录树。请注意，如果你没有创建所有推荐的目录，Tomcat 会自动创建这些目录。如果它无法创建必要的目录，例如由于权限问题，Tomcat 可能会无法启动，或者可能无法正常运行。</p>
+<p>请考虑以下目录列表：</p>
+<ul>
+<li>包含 <code>bin</code> 、 <code>setenv.sh</code> 、 <code>setenv.bat</code> 和 <code>tomcat-juli.jar</code> 文件的目录。</li>
 </ul>
 
       </div>

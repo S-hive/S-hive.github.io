@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"s-hive.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="服务的底层原理是什么？Tomcat 是一个开源的 Servlet 容器，属于 Apache 软件基金会项目，它主要用于运行 Java Web 应用程序。下面来剖析其底层工作原理：  请求处理流程 客户端向服务器发起 HTTP 请求，请求首先会到达 Tomcat 的连接器（Connector）。 连接器把请求转换为 ServletRequest 对象，接着将该对象传递给容器（Container）进行">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tomcat面试">
+<meta property="og:url" content="https://s-hive.github.io/Serve/Tomcat%E9%9D%A2%E8%AF%95">
+<meta property="og:site_name" content="S-hive&#39;s portfolio">
+<meta property="og:description" content="服务的底层原理是什么？Tomcat 是一个开源的 Servlet 容器，属于 Apache 软件基金会项目，它主要用于运行 Java Web 应用程序。下面来剖析其底层工作原理：  请求处理流程 客户端向服务器发起 HTTP 请求，请求首先会到达 Tomcat 的连接器（Connector）。 连接器把请求转换为 ServletRequest 对象，接着将该对象传递给容器（Container）进行">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-07-24T09:08:36.632Z">
+<meta property="article:modified_time" content="2025-07-24T09:08:36.632Z">
+<meta property="article:author" content="Li yalin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://s-hive.github.io/Serve/Tomcat%E9%9D%A2%E8%AF%95">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://s-hive.github.io/Serve/Tomcat%E9%9D%A2%E8%AF%95","path":"Serve/Tomcat面试.html","title":"Tomcat面试"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Tomcat面试 | S-hive's portfolio
+</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">S-hive's portfolio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-cs61b"><a href="/CS61B/" rel="section"><i class="book fa-fw"></i>CS61B</a></li><li class="menu-item menu-item-debug"><a href="/Debug/" rel="section"><i class="bug fa-fw"></i>Debug</a></li><li class="menu-item menu-item-serve"><a href="/Serve/" rel="section"><i class="book fa-fw"></i>Serve</a></li><li class="menu-item menu-item-数据结构"><a href="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="section"><i class="book fa-fw"></i>数据结构</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">服务的底层原理是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%89%E4%BB%80%E4%B9%88%E8%BD%AF%E4%BB%B6%E6%88%96%E8%80%85%E6%9C%8D%E5%8A%A1%E8%B7%9F%E8%A6%81%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E7%B1%BB%E4%BC%BC%EF%BC%8C%E4%BB%96%E4%BB%AC%E7%9A%84%E5%BC%82%E5%90%8C%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%8C%E6%98%AF%E5%90%A6%E5%8F%AF%E4%BB%A5%E6%9B%BF%E4%BB%A3%EF%BC%8C%E4%B8%8D%E5%8F%AF%E6%9B%BF%E4%BB%A3%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">2.</span> <span class="nav-text">有什么软件或者服务跟要学习的服务类似，他们的异同点是什么，是否可以替代，不可替代点是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%88%91%E4%BB%AC%E5%9C%A8%E5%85%AC%E5%8F%B8%E9%87%8C%E9%83%BD%E4%BC%9A%E5%9C%A8%E5%93%AA%E4%BA%9B%E5%9C%BA%E6%99%AF%E4%B8%8B%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">我们在公司里都会在哪些场景下使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%9C%A8%E4%BD%BF%E7%94%A8%E6%88%96%E8%80%85%E5%AE%89%E8%A3%85%E4%B8%AD%E9%81%87%E5%88%B0%E8%BF%87%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">服务在使用或者安装中遇到过什么问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%85%B6%E4%BB%96%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E6%98%AF%E4%BB%80%E4%B9%88-%E5%9C%A8%E5%88%AB%E7%9A%84%E5%85%AC%E5%8F%B8%E5%A6%82%E4%BD%95%E7%94%A8%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">服务的其他使用场景是什么 (在别的公司如何用）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E6%88%91%E4%BB%AC%E7%94%A8%E7%9A%84%E7%89%88%E6%9C%AC%E5%8F%B7%E4%BB%80%E4%B9%88%EF%BC%8C%E6%9C%89%E5%93%AA%E4%BA%9B%E7%89%88%E6%9C%AC%EF%BC%8C%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%AC%E5%8F%B7%E6%9B%B4%E6%96%B0%E5%88%B0%E4%BB%80%E4%B9%88%E7%A8%8B%E5%BA%A6%EF%BC%8C%E5%90%84%E4%B8%AA%E7%89%88%E6%9C%AC%E6%9C%89%E4%BB%80%E4%B9%88%E5%BC%82%E5%90%8C"><span class="nav-number">6.</span> <span class="nav-text">目前我们用的版本号什么，有哪些版本，最新版本号更新到什么程度，各个版本有什么异同</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%99%E4%B8%AA%E6%9C%8D%E5%8A%A1%E6%88%96%E8%80%85%E8%BD%AF%E4%BB%B6%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E6%A8%A1%E5%9D%97"><span class="nav-number">7.</span> <span class="nav-text">这个服务或者软件有哪些常见的模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%97%A5%E5%BF%97%EF%BC%8C%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%95%B0%E6%8D%AE%E9%83%BD%E6%98%AF%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E7%9A%84"><span class="nav-number">8.</span> <span class="nav-text">服务的日志，服务的数据都是如何处理的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%8D%87%E7%BA%A7%E6%98%AF%E6%80%8E%E4%B9%88%E5%81%9A%E7%9A%84%EF%BC%8C%E6%AF%8F%E4%B8%AA%E7%89%88%E6%9C%AC%E9%83%BD%E6%9C%89%E5%93%AA%E4%BA%9B%E7%9B%B8%E5%BA%94%E7%9A%84%E6%BC%8F%E6%B4%9E"><span class="nav-number">9.</span> <span class="nav-text">服务的升级是怎么做的，每个版本都有哪些相应的漏洞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%99%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%8F%AF%E4%BB%A5%E4%B8%8E%E5%93%AA%E4%BA%9B%E6%9C%8D%E5%8A%A1%E7%BB%93%E5%90%88%E6%9C%89%E6%84%8F%E6%83%B3%E4%B8%8D%E5%88%B0%E7%9A%84%E5%8A%9F%E8%83%BD%E6%88%96%E8%80%85%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">10.</span> <span class="nav-text">这个服务可以与哪些服务结合有意想不到的功能或者解决方案</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E%E5%AE%89%E5%85%A8%E7%9A%84%E8%A7%92%E5%BA%A6%E6%9D%A5%E8%80%83%E8%99%91%E8%BF%99%E4%B8%AA%E8%BD%AF%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AE%89%E5%85%A8%E6%88%96%E8%80%85%E9%9C%80%E8%A6%81%E5%9C%A8%E5%93%AA%E9%87%8C%E8%B0%83%E4%BC%98%EF%BC%9F"><span class="nav-number">11.</span> <span class="nav-text">从安全的角度来考虑这个软件是否安全或者需要在哪里调优？</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Li yalin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">Tomcat面试<a href="https://github.com/s-hive/s-hive.github.io/tree/main/source/_posts/Serve/Tomcat%E9%9D%A2%E8%AF%95.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h4 id="服务的底层原理是什么？"><a href="#服务的底层原理是什么？" class="headerlink" title="服务的底层原理是什么？"></a>服务的底层原理是什么？</h4><p>Tomcat 是一个开源的 Servlet 容器，属于 Apache 软件基金会项目，它主要用于运行 Java Web 应用程序。下面来剖析其底层工作原理：</p>
+<ol>
+<li><strong>请求处理流程</strong><br> 客户端向服务器发起 HTTP 请求，请求首先会到达 Tomcat 的连接器（Connector）。<br> 连接器把请求转换为 ServletRequest 对象，接着将该对象传递给容器（Container）进行处理。<br> 容器依据 Servlet 映射配置，找到对应的 Servlet，并调用其 service () 方法。<br> Servlet 处理完请求后，会返回一个 ServletResponse 对象，连接器再把这个对象转换为 HTTP 响应返回给客户端。</li>
+<li><strong>核心组件</strong><ul>
+<li>*<em>连接器（Connector）</em>：负责处理底层的网络通信，支持像 HTTP&#x2F;1.1、HTTP&#x2F;2 等多种协议。</li>
+</ul>
+<ul>
+<li><strong>容器（Container）</strong>：由 Engine、Host、Context 和 Wrapper 这四个层次的组件构成，主要负责 Servlet 的生命周期管理以及请求的路由。</li>
+<li><strong>Servlet 引擎</strong>：按照 Servlet 规范来执行 Servlet 和 JSP。</li>
+<li><strong>生命周期管理</strong>：借助 Lifecycle 接口对组件的生命周期（如初始化、启动、停止等）进行管理。</li>
+</ul>
+</li>
+<li><strong>线程模型</strong><br> Tomcat 支持多种线程模型，例如：<ul>
+<li><strong>BIO（阻塞 I&#x2F;O）</strong>：一个线程处理一个连接，这种方式在并发性能上表现较差。</li>
+<li><strong>NIO（非阻塞 I&#x2F;O）</strong>：利用 Selector 实现多路复用，一个线程能够处理多个连接。</li>
+<li><strong>APR（Apache Portable Runtime）</strong>：基于本地库实现，在高并发场景下性能最佳。</li>
+</ul>
+</li>
+</ol>
+<h4 id="有什么软件或者服务跟要学习的服务类似，他们的异同点是什么，是否可以替代，不可替代点是什么？"><a href="#有什么软件或者服务跟要学习的服务类似，他们的异同点是什么，是否可以替代，不可替代点是什么？" class="headerlink" title="有什么软件或者服务跟要学习的服务类似，他们的异同点是什么，是否可以替代，不可替代点是什么？"></a>有什么软件或者服务跟要学习的服务类似，他们的异同点是什么，是否可以替代，不可替代点是什么？</h4><p>下面是与 Tomcat 类似的常见 Web 服务器和 Servlet 容器：</p>
+<table>
+<thead>
+<tr>
+<th>产品</th>
+<th>类型</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Apache HTTP Server</strong></td>
+<td>Web 服务器</td>
+<td>主要用于静态内容服务，不过可以通过 mod_jk 等模块与 Servlet 容器集成。</td>
+</tr>
+<tr>
+<td><strong>Nginx</strong></td>
+<td>Web 服务器 &#x2F; 反向代理</td>
+<td>轻量级且高性能，擅长处理静态内容和反向代理，同样能和 Servlet 容器配合使用。</td>
+</tr>
+<tr>
+<td><strong>Jetty</strong></td>
+<td>Servlet 容器</td>
+<td>轻量级、模块化，在嵌入式场景中应用广泛，和 Tomcat 高度兼容。</td>
+</tr>
+<tr>
+<td><strong>WildFly (JBoss)</strong></td>
+<td>应用服务器</td>
+<td>功能全面，支持 EJB 等 Java EE 标准，但资源占用相对较多。</td>
+</tr>
+<tr>
+<td><strong>GlassFish</strong></td>
+<td>应用服务器</td>
+<td>是 Java EE 的参考实现，不过在企业级应用中的使用频率逐渐降低。</td>
+</tr>
+<tr>
+<td><strong>替代分析</strong>：</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>部分替代</strong>：Nginx + 独立 Servlet 容器（如 Tomcat）的组合可以替代 Tomcat 的部分功能，特别是在负载均衡和静态内容处理方面。</li>
+<li><strong>完全替代</strong>：Jetty 由于和 Servlet 规范兼容，并且更加轻量级，所以在大多数场景下可以替代 Tomcat。</li>
+<li><strong>不可替代点</strong>：<ul>
+<li>Tomcat 对 Apache HTTP Server 和 Nginx 起到补充作用，后两者主要侧重于静态内容服务，而 Tomcat 专注于动态内容处理。</li>
+<li>企业级应用可能会依赖 WildFly 等应用服务器提供的完整 Java EE 功能。</li>
+<li>对于已经深度集成 Tomcat 特定功能（如自定义 Realm、Valve）的应用，替换成本较高。</li>
+</ul>
+</li>
+</ul>
+<h4 id="我们在公司里都会在哪些场景下使用"><a href="#我们在公司里都会在哪些场景下使用" class="headerlink" title="我们在公司里都会在哪些场景下使用"></a>我们在公司里都会在哪些场景下使用</h4><ol>
+<li><strong>Web 应用服务器</strong></li>
+</ol>
+<ul>
+<li>作为 Java Web 应用的运行环境，比如 Spring Boot 应用默认就内嵌 Tomcat。</li>
+<li>部署传统的 WAR 包应用，像基于 Struts、JSF 框架开发的应用。</li>
+</ul>
+<ol start="2">
+<li><strong>微服务架构</strong></li>
+</ol>
+<ul>
+<li>为微服务提供轻量级的运行容器。</li>
+<li>与 Spring Cloud 等框架结合，构建分布式系统。</li>
+</ul>
+<ol start="3">
+<li><strong>开发测试环境</strong></li>
+</ol>
+<ul>
+<li>开发阶段进行本地调试。</li>
+<li>CI&#x2F;CD 流程中作为测试服务器，例如在 Jenkins、GitLab CI 中使用。</li>
+</ul>
+<ol start="4">
+<li><strong>与其他组件集成</strong></li>
+</ol>
+<ul>
+<li>和 Nginx 搭配，由 Nginx 负责负载均衡和静态内容处理，Tomcat 专注于动态请求。</li>
+<li>与数据库、消息队列等后端服务集成。</li>
+</ul>
+<ol start="5">
+<li><strong>嵌入式场景</strong></li>
+</ol>
+<ul>
+<li>作为库嵌入到 Java 应用中，为应用提供 HTTP 服务，例如在 Spring Boot 应用中。<br><strong>典型案例</strong>：</li>
+<li>中小型企业网站，由于流量不大，会直接使用 Tomcat 作为 Web 服务器。</li>
+<li>大型企业系统中的独立服务模块，可能会选择部署在 Tomcat 上。</li>
+<li>开发团队使用 Tomcat 作为开发和测试环境，生产环境则切换到更复杂的应用服务器。</li>
+</ul>
+<h4 id="服务在使用或者安装中遇到过什么问题"><a href="#服务在使用或者安装中遇到过什么问题" class="headerlink" title="服务在使用或者安装中遇到过什么问题"></a>服务在使用或者安装中遇到过什么问题</h4><p>在使用或安装 Tomcat 服务时，常见的问题包括：</p>
+<ol>
+<li><p><strong>安装配置问题</strong></p>
+<ul>
+<li><strong>端口冲突</strong>：默认使用 8080 端口，若被其他应用（如 Skype、另一个 Tomcat 实例）占用，启动会失败。</li>
+<li><strong>环境变量配置错误</strong>：未正确设置 JAVA_HOME 或 CATALINA_HOME 环境变量，导致启动脚本无法找到 Java 运行时。</li>
+<li><strong>权限不足</strong>：在 Linux 系统中，非 root 用户启动时可能无法绑定低于 1024 的端口（如 80）。</li>
+</ul>
+</li>
+<li><p><strong>性能与内存问题</strong></p>
+<ul>
+<li><strong>内存溢出（OOM）</strong>：默认内存配置较低（如 128MB 堆内存），高并发下易触发 OutOfMemoryError。</li>
+<li><strong>线程池配置不合理</strong>：默认线程数不足（如 maxThreads&#x3D;200），导致请求堆积。</li>
+<li><strong>GC 频繁</strong>：堆内存分配不合理，导致频繁 Full GC，影响响应时间。</li>
+</ul>
+</li>
+<li><p><strong>安全漏洞</strong></p>
+<ul>
+<li><strong>默认配置风险</strong>：未修改默认的 manager&#x2F;host-manager 应用密码，可能被远程攻击。</li>
+<li><strong>Servlet 容器漏洞</strong>：如 Ghostcat 漏洞（CVE-2020-1938）允许读取 WEB-INF 目录下的文件。</li>
+<li><strong>过时依赖</strong>：使用的 Apache Commons FileUpload 等组件存在已知漏洞。</li>
+</ul>
+</li>
+<li><p><strong>应用部署问题</strong></p>
+<ul>
+<li><strong>WAR 包冲突</strong>：多个应用依赖同一库的不同版本，导致类加载冲突。</li>
+<li><strong>JSP 编译错误</strong>：JSP 文件修改后未重新编译，或编译时依赖缺失。</li>
+<li><strong>上下文路径冲突</strong>：多个应用配置相同的 Context Path，导致访问异常。</li>
+</ul>
+</li>
+<li><p><strong>集群与负载均衡</strong></p>
+<ul>
+<li><strong>Session 复制失败</strong>：集群环境中 Session 未能正确复制，导致用户登录状态丢失。</li>
+<li><strong>反向代理配置错误</strong>：Nginx&#x2F;Apache 与 Tomcat 集成时，未正确配置 proxy_pass 或 sticky session。</li>
+</ul>
+</li>
+</ol>
+<h4 id="服务的其他使用场景是什么-在别的公司如何用）"><a href="#服务的其他使用场景是什么-在别的公司如何用）" class="headerlink" title="服务的其他使用场景是什么 (在别的公司如何用）"></a>服务的其他使用场景是什么 (在别的公司如何用）</h4><ol>
+<li><p><strong>API 网关 &#x2F; 服务网关</strong></p>
+<ul>
+<li>作为轻量级网关，处理 RESTful API 请求，集成 Spring Cloud Gateway 等组件。</li>
+<li>某金融科技公司使用 Tomcat 部署 API 网关，通过 Filter 实现请求鉴权和流量控制。</li>
+</ul>
+</li>
+<li><p><strong>企业级 SOA 平台</strong></p>
+<ul>
+<li>在传统企业中，作为 SOAP Web 服务的容器，支撑遗留系统间的集成。</li>
+<li>某制造业公司使用 Tomcat 运行基于 Axis2 的 Web 服务，与 ERP 系统对接。</li>
+</ul>
+</li>
+<li><p><strong>IoT 平台后端</strong></p>
+<ul>
+<li>处理 IoT 设备的 HTTP&#x2F;MQTT 请求，结合数据库存储设备数据。</li>
+<li>某智能家居公司使用 Tomcat 接收设备状态数据，并通过 WebSocket 推送至客户端。</li>
+</ul>
+</li>
+<li><p><strong>教学与培训</strong></p>
+<ul>
+<li>高校或培训机构作为 Java Web 开发教学的基础环境。</li>
+<li>某培训机构使用 Tomcat 配合 Eclipse，教授 Servlet&#x2F;JSP 开发。</li>
+</ul>
+</li>
+<li><p><strong>嵌入式系统</strong></p>
+<ul>
+<li>在机顶盒、智能终端等资源受限设备中嵌入 Tomcat，提供 Web 管理界面。</li>
+<li>某网络设备厂商在路由器中集成 Tomcat 微内核，提供 Web 配置界面。</li>
+</ul>
+</li>
+<li><p><strong>爬虫与数据采集</strong></p>
+<ul>
+<li>部署爬虫管理平台，调度和监控分布式爬虫任务。</li>
+<li>某电商公司使用 Tomcat 运行 Scrapy 爬虫管理系统，定时抓取竞品数据。</li>
+</ul>
+</li>
+</ol>
+<h4 id="目前我们用的版本号什么，有哪些版本，最新版本号更新到什么程度，各个版本有什么异同"><a href="#目前我们用的版本号什么，有哪些版本，最新版本号更新到什么程度，各个版本有什么异同" class="headerlink" title="目前我们用的版本号什么，有哪些版本，最新版本号更新到什么程度，各个版本有什么异同"></a>目前我们用的版本号什么，有哪些版本，最新版本号更新到什么程度，各个版本有什么异同</h4><table>
+<thead>
+<tr>
+<th>版本系列</th>
+<th>支持的 Servlet&#x2F;JSP 规范</th>
+<th>状态</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>10.x</strong></td>
+<td>Servlet 5.0&#x2F;JSP 3.0</td>
+<td>活跃版本</td>
+<td>基于 Jakarta EE 9 + 的应用</td>
+</tr>
+<tr>
+<td><strong>9.x</strong></td>
+<td>Servlet 4.0&#x2F;JSP 2.3</td>
+<td>LTS 版本</td>
+<td>大多数生产环境</td>
+</tr>
+<tr>
+<td><strong>最新版本（截至 2025 年 7 月）</strong></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>Tomcat 10.1.x</strong>：最新稳定版，完全支持 Jakarta EE 10，移除了对 Java EE 的支持。</li>
+<li><strong>Tomcat 9.0.83</strong>：LTS 版本，仍被广泛使用，支持 Java 8-17。</li>
+<li><strong>Tomcat 11.x</strong>：开发中，将支持 Jakarta EE 11，计划引入 HTTP&#x2F;3 等新特性。</li>
+</ul>
+<h4 id="这个服务或者软件有哪些常见的模块"><a href="#这个服务或者软件有哪些常见的模块" class="headerlink" title="这个服务或者软件有哪些常见的模块"></a>这个服务或者软件有哪些常见的模块</h4><p>作以支持 Java Web 应用的运行：<br> 1.<strong>核心功能模块</strong></p>
+<ul>
+<li><p><strong>Catalina</strong>：Tomcat 的核心容器模块，包含以下子模块：</p>
+<ul>
+<li><strong>Connector（连接器）</strong>：处理网络协议（HTTP、AJP 等），负责接收客户端请求并转换为容器可处理的格式。</li>
+<li><strong>Container（容器）</strong>：由 Engine（引擎）、Host（虚拟主机）、Context（应用上下文）、Wrapper（Servlet 包装器）四级组件构成，管理 Servlet 生命周期和请求路由。</li>
+<li><strong>Realm</strong>：负责用户认证和授权，支持基于文件、数据库、LDAP 等多种认证方式。</li>
+<li><strong>Valve</strong>：类似拦截器，可在请求处理的不同阶段插入逻辑（如日志记录、访问控制）。</li>
+</ul>
+</li>
+<li><p><strong>Jasper</strong>：JSP 引擎模块，负责将 JSP 文件编译为 Servlet 类（.java→.class），支持热部署（修改 JSP 后自动重新编译）。</p>
+</li>
+<li><p><strong>Coyote</strong>：处理底层 I&#x2F;O 通信的模块，提供 BIO、NIO、NIO2、APR 等多种 I&#x2F;O 模型，支持 HTTP&#x2F;1.1、HTTP&#x2F;2、AJP 等协议。</p>
+</li>
+<li><p><strong>Cluster</strong>：集群模块，支持 Session 复制、负载均衡和故障转移，依赖组播或静态列表发现集群节点。</p>
+</li>
+<li><p><strong>Naming</strong>：JNDI（Java 命名与目录接口）实现模块，用于管理数据源、邮件会话等资源。</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>扩展模块</strong></li>
+</ol>
+<ul>
+<li><strong>WebSocket 支持</strong>：通过<code>org.apache.tomcat.websocket</code>包实现 WebSocket 协议（RFC 6455），支持双向通信。</li>
+<li><strong>Security</strong>：提供 SSL&#x2F;TLS 配置、CSP（内容安全策略）、CSRF 防护等安全增强功能。</li>
+<li><strong>Manager</strong>：Web 管理界面模块，用于部署应用、监控服务器状态（需配置用户权限）。</li>
+<li><strong>Host-Manager</strong>：虚拟主机管理模块，支持通过 Web 界面添加 &#x2F; 删除虚拟主机。</li>
+</ul>
+<h4 id="服务的日志，服务的数据都是如何处理的"><a href="#服务的日志，服务的数据都是如何处理的" class="headerlink" title="服务的日志，服务的数据都是如何处理的"></a>服务的日志，服务的数据都是如何处理的</h4><p><strong>1.日志处理</strong><br>Tomcat 的日志分为多种类型，通过<code>conf/logging.properties</code>配置：</p>
+<ul>
+<li><strong>Catalina 日志</strong>：记录服务器启动、关闭、组件加载等系统级信息，默认输出到<code>logs/catalina.out</code>（Linux）或<code>logs/catalina.yyyy-MM-dd.log</code>（按日期滚动）。</li>
+<li><strong>访问日志</strong>：记录 HTTP 请求详情（IP、URL、状态码、响应时间等），默认通过<code>conf/server.xml</code>中的<code>AccessLogValve</code>配置，输出到<code>logs/access_log.yyyy-MM-dd.txt</code>，格式可自定义（如 Common Log Format）。</li>
+<li><strong>应用日志</strong>：Web 应用通过<code>java.util.logging</code>或 Log4j 等框架输出的日志，默认与 Catalina 日志合并，可通过配置分离到独立文件。</li>
+<li><strong><a target="_blank" rel="noopener" href="https://localhost/">localhost</a>日志</strong>：记录虚拟主机<code>localhost</code>相关的信息，如应用部署失败的原因。</li>
+<li><strong>manager&#x2F;host-manager 日志</strong>：记录管理界面的操作日志，用于审计管理行为。<br><strong>日志轮转策略</strong>：默认按日期分割日志，可配置<code>maxDays</code>限制保留天数，或通过第三方工具（如 Logrotate）实现日志归档和清理。</li>
+</ul>
+<h4 id="服务的升级是怎么做的，每个版本都有哪些相应的漏洞"><a href="#服务的升级是怎么做的，每个版本都有哪些相应的漏洞" class="headerlink" title="服务的升级是怎么做的，每个版本都有哪些相应的漏洞"></a>服务的升级是怎么做的，每个版本都有哪些相应的漏洞</h4><table>
+<thead>
+<tr>
+<th>Tomcat 8.5-10</th>
+<th>CVE-2022-23181</th>
+<th>拒绝服务：HTTP&#x2F;2 请求处理不当导致内存泄漏</th>
+<th>10.0.20+、9.0.62+</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Tomcat 9-10</td>
+<td>CVE-2023-28709</td>
+<td>远程代码执行：<code>WebSocket</code>处理不当，恶意请求可触发 ClassCastException</td>
+<td>10.1.8+、9.0.74+</td>
+</tr>
+</tbody></table>
+<h4 id="这个服务可以与哪些服务结合有意想不到的功能或者解决方案"><a href="#这个服务可以与哪些服务结合有意想不到的功能或者解决方案" class="headerlink" title="这个服务可以与哪些服务结合有意想不到的功能或者解决方案"></a>这个服务可以与哪些服务结合有意想不到的功能或者解决方案</h4><p>Tomcat 作为 Java Web 容器，与其他服务结合可扩展出多样化的企业级解决方案，以下是典型场景：</p>
+<ol>
+<li><strong>与反向代理 &#x2F; 负载均衡服务结合</strong></li>
+</ol>
+<ul>
+<li><p><strong>搭配 Nginx&#x2F;Apache HTTP Server</strong>：</p>
+<ul>
+<li>Nginx 作为前端反向代理，处理静态资源（CSS&#x2F;JS&#x2F; 图片），将动态请求转发给 Tomcat，提升静态资源加载速度并减轻 Tomcat 压力。</li>
+<li>利用 Nginx 的负载均衡功能（如<code>upstream</code>模块），将请求分发到多台 Tomcat 服务器，实现集群扩容和高可用（例如电商平台秒杀场景的流量分流）。</li>
+</ul>
+</li>
+<li><p><strong>搭配 HAProxy</strong>：</p>
+<ul>
+<li>针对 TCP 层的负载均衡（如 AJP 协议），支持更精细的健康检查和会话保持，适合对性能要求极高的金融交易系统。</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li><strong>与缓存 &#x2F; 消息队列服务结合</strong></li>
+</ol>
+<ul>
+<li><p><strong>搭配 Redis</strong>：</p>
+<ul>
+<li>将 Tomcat 的 Session 数据存储在 Redis 中（通过<code>tomcat-redis-session-manager</code>插件），解决集群环境下 Session 共享问题，同时利用 Redis 的高读写性能提升 Session 访问速度。</li>
+<li>结合 Redis 作为应用级缓存，Tomcat 部署的 Java Web 应用可直接读写 Redis 缓存热点数据（如商品详情），减少数据库访问压力。</li>
+</ul>
+</li>
+<li><p><strong>搭配 RabbitMQ&#x2F;Kafka</strong>：</p>
+<ul>
+<li>Tomcat 应用作为消息生产者 &#x2F; 消费者，通过消息队列异步处理非实时任务（如订单日志写入、邮件发送），避免同步操作阻塞 Tomcat 线程，提升系统吞吐量（例如电商订单提交后异步通知仓库）。</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li><strong>与容器 &#x2F; 云服务结合</strong></li>
+</ol>
+<ul>
+<li><p><strong>搭配 Docker&#x2F;Kubernetes</strong>：</p>
+<ul>
+<li>将 Tomcat 打包为 Docker 镜像，通过 Kubernetes 实现自动扩缩容、滚动更新和故障自愈，适合微服务架构（例如 Spring Cloud 应用部署在 Tomcat 容器中，通过 K8s 管理多实例）。</li>
+<li>结合 Docker Compose 快速搭建本地开发环境（Tomcat+MySQL+Redis 一键启动），降低环境配置成本。</li>
+</ul>
+</li>
+<li><p><strong>搭配云服务（如 AWS ECS &#x2F; 阿里云容器服务）</strong>：</p>
+<ul>
+<li>利用云厂商的负载均衡、日志服务和监控告警功能，实现 Tomcat 应用的全托管运维，无需关注底层服务器部署。</li>
+</ul>
+</li>
+</ul>
+<ol start="4">
+<li><strong>与监控 &#x2F; 日志服务结合</strong></li>
+</ol>
+<ul>
+<li><p><strong>搭配 Prometheus+Grafana</strong>：</p>
+<ul>
+<li>通过<code>tomcat_exporter</code>采集 Tomcat 的 JVM 内存、线程数、请求响应时间等指标，结合 Grafana 可视化监控面板，实时预警性能瓶颈（如线程池满导致请求阻塞）。</li>
+</ul>
+</li>
+<li><p><strong>搭配 ELK Stack（Elasticsearch+Logstash+Kibana）</strong>：</p>
+<ul>
+<li>用 Logstash 收集 Tomcat 的访问日志和应用日志，存储到 Elasticsearch，通过 Kibana 分析用户行为（如热门访问路径）或排查异常（如频繁 500 错误的触发条件）。</li>
+</ul>
+</li>
+</ul>
+<ol start="5">
+<li><strong>与安全工具结合</strong></li>
+</ol>
+<ul>
+<li><strong>搭配 ModSecurity</strong>：<ul>
+<li>作为 Web 应用防火墙（WAF），与 Nginx+Tomcat 联动，拦截 SQL 注入、XSS 等攻击请求，保护 Tomcat 部署的应用（例如政务系统的敏感数据接口防护）。</li>
+</ul>
+</li>
+</ul>
+<h4 id="从安全的角度来考虑这个软件是否安全或者需要在哪里调优？"><a href="#从安全的角度来考虑这个软件是否安全或者需要在哪里调优？" class="headerlink" title="从安全的角度来考虑这个软件是否安全或者需要在哪里调优？"></a>从安全的角度来考虑这个软件是否安全或者需要在哪里调优？</h4><p>Tomcat 的核心安全风险点包括：</p>
+<ol>
+<li><strong>默认配置风险</strong>：默认安装包含<code>manager</code>、<code>host-manager</code>等管理界面，且可能存在弱密码（如默认用户<code>admin</code>无密码），易被未授权访问。</li>
+<li><strong>协议 &#x2F; 组件漏洞</strong>：历史版本存在高危漏洞（如 CVE-2020-1938 Ghostcat 文件读取漏洞、CVE-2023-28709 远程代码执行漏洞），多与组件缺陷或配置疏漏相关。</li>
+<li><strong>权限控制不足</strong>：文件系统权限宽松（如<code>conf/</code>目录可被非 root 用户修改）、应用部署目录权限过高，可能导致恶意文件写入。</li>
+</ol>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Li yalin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
