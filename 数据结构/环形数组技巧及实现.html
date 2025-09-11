@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"s-hive.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="环形数组原理12345678&#x2F;&#x2F; 长度为 5 的数组int[] arr &#x3D; new int[]&#123;1, 2, 3, 4, 5&#125;;int i &#x3D; 0;&#x2F;&#x2F; 模拟环形数组，这个循环永远不会结束while (i &lt; arr.length) &#123;    System.out.println(arr[i]);    i &#x3D; (i + 1) % arr.length;&amp;#125">
+<meta property="og:type" content="website">
+<meta property="og:title" content="环形数组技巧及实现">
+<meta property="og:url" content="https://s-hive.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%8E%AF%E5%BD%A2%E6%95%B0%E7%BB%84%E6%8A%80%E5%B7%A7%E5%8F%8A%E5%AE%9E%E7%8E%B0">
+<meta property="og:site_name" content="S-hive&#39;s portfolio">
+<meta property="og:description" content="环形数组原理12345678&#x2F;&#x2F; 长度为 5 的数组int[] arr &#x3D; new int[]&#123;1, 2, 3, 4, 5&#125;;int i &#x3D; 0;&#x2F;&#x2F; 模拟环形数组，这个循环永远不会结束while (i &lt; arr.length) &#123;    System.out.println(arr[i]);    i &#x3D; (i + 1) % arr.length;&amp;#125">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-07-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-29T12:23:43.492Z">
+<meta property="article:author" content="Li yalin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://s-hive.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%8E%AF%E5%BD%A2%E6%95%B0%E7%BB%84%E6%8A%80%E5%B7%A7%E5%8F%8A%E5%AE%9E%E7%8E%B0">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://s-hive.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%8E%AF%E5%BD%A2%E6%95%B0%E7%BB%84%E6%8A%80%E5%B7%A7%E5%8F%8A%E5%AE%9E%E7%8E%B0","path":"数据结构/环形数组技巧及实现.html","title":"环形数组技巧及实现"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>环形数组技巧及实现 | S-hive's portfolio
+</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">S-hive's portfolio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-cs61b"><a href="/CS61B/" rel="section"><i class="book fa-fw"></i>CS61B</a></li><li class="menu-item menu-item-serve"><a href="/Serve/" rel="section"><i class="book fa-fw"></i>Serve</a></li><li class="menu-item menu-item-数据结构"><a href="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="section"><i class="book fa-fw"></i>数据结构</a></li><li class="menu-item menu-item-debug"><a href="/Debug/" rel="section"><i class="bug fa-fw"></i>Debug</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%BD%A2%E6%95%B0%E7%BB%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">环形数组原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF-star%E6%8C%87%E5%90%91%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%9C%89%E6%95%88%E5%85%83%E7%B4%A0%E7%9A%84%E5%89%8D%E4%B8%80%E4%B8%AA%E7%B4%A2%E5%BC%95"><span class="nav-number">1.0.1.</span> <span class="nav-text">为什么不是 star指向第一个有效元素的前一个索引?</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Li yalin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">环形数组技巧及实现<a href="https://github.com/s-hive/s-hive.github.io/tree/main/source/_posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%8E%AF%E5%BD%A2%E6%95%B0%E7%BB%84%E6%8A%80%E5%B7%A7%E5%8F%8A%E5%AE%9E%E7%8E%B0.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="环形数组原理"><a href="#环形数组原理" class="headerlink" title="环形数组原理"></a>环形数组原理</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 长度为 5 的数组</span></span><br><span class="line"><span class="type">int</span>[] arr = <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"><span class="comment">// 模拟环形数组，这个循环永远不会结束</span></span><br><span class="line"><span class="keyword">while</span> (i &lt; arr.length) &#123;</span><br><span class="line">    System.out.println(arr[i]);</span><br><span class="line">    i = (i + <span class="number">1</span>) % arr.length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>这段代码的关键在于求模运算 <code>%</code>，也就是求余数</strong>。当 <code>i</code> 到达数组末尾元素时，<code>i + 1</code> 和 <code>arr.length</code> 取余数又会变成 0，即会回到数组头部，这样就在逻辑上形成了一个环形数组，永远遍历不完。</p>
+<blockquote>
+<p>环形数组的关键在于，它维护了两个指针 <code>start</code> 和 <code>end</code>，<code>start</code> 指向第一个有效元素的索引，<code>end</code> 指向最后一个有效元素的下一个位置索引。</p>
+<p>这样，当我们在数组头部添加或删除元素时，只需要移动 <code>start</code> 索引，而在数组尾部添加或删除元素时，只需要移动 <code>end</code> 索引。</p>
+<p>当 <code>start, end</code> 移动超出数组边界（<code>&lt; 0</code> 或 <code>&gt;= arr.length</code>）时，我们可以通过求模运算 <code>%</code> 让它们转一圈到数组头部或尾部继续工作，这样就实现了环形数组的效果。</p>
+</blockquote>
+<h4 id="为什么不是-star指向第一个有效元素的前一个索引"><a href="#为什么不是-star指向第一个有效元素的前一个索引" class="headerlink" title="为什么不是 star指向第一个有效元素的前一个索引?"></a>为什么不是 star指向第一个有效元素的前一个索引?</h4><p><strong>空数组判断更直观</strong><br>若<code>start</code>指向第一个有效元素：</p>
+<ul>
+<li><strong>空数组条件</strong>：<code>start == end</code><br>  当数组为空时，没有任何有效元素，<code>start</code>和<code>end</code>重合（初始状态或删除所有元素后）。</li>
+</ul>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><blockquote>
+<p>在我的代码中，环形数组的区间被定义为左闭右开的，即 <code>[start, end)</code> 区间包含数组元素。所以其他的方法都是以左闭右开区间为基础实现的,<strong>一般设计为左闭右开区间是最方便处理的</strong>。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CycleArray</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> T[] arr;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> start;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> end;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> count;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> size;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CycleArray</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">CycleArray</span><span class="params">(<span class="type">int</span> size)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.size = size;</span><br><span class="line">        <span class="comment">// 因为 Java 不支持直接创建泛型数组，所以这里使用了类型转换</span></span><br><span class="line">        <span class="built_in">this</span>.arr = (T[]) <span class="keyword">new</span> <span class="title class_">Object</span>[size];</span><br><span class="line">        <span class="comment">// start 指向第一个有效元素的索引，闭区间</span></span><br><span class="line">        <span class="built_in">this</span>.start = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// 切记 end 是一个开区间，</span></span><br><span class="line">        <span class="comment">// 即 end 指向最后一个有效元素的下一个位置索引</span></span><br><span class="line">        <span class="built_in">this</span>.end = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">this</span>.count = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自动扩缩容辅助函数</span></span><br><span class="line">    <span class="comment">// 让编译器不对未检查的类型转换警告进行提示。在 Java 中，进行泛型类型转换时，要是无法确定类型的安全性，编译器就会发出警告。</span></span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">resize</span><span class="params">(<span class="type">int</span> newSize)</span> &#123;</span><br><span class="line">        <span class="comment">// 创建新的数组</span></span><br><span class="line">        T[] newArr = (T[]) <span class="keyword">new</span> <span class="title class_">Object</span>[newSize];</span><br><span class="line">        <span class="comment">// 将旧数组的元素复制到新数组中</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">            newArr[i] = arr[(start + i) % size];</span><br><span class="line">        &#125;</span><br><span class="line">        arr = newArr;</span><br><span class="line">        <span class="comment">// 重置 start 和 end 指针</span></span><br><span class="line">        start = <span class="number">0</span>;</span><br><span class="line">        end = count;</span><br><span class="line">        size = newSize;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在数组头部添加元素，时间复杂度 O(1)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addFirst</span><span class="params">(T val)</span> &#123;</span><br><span class="line">        <span class="comment">// 当数组满时，扩容为原来的两倍</span></span><br><span class="line">        <span class="keyword">if</span> (isFull()) &#123;</span><br><span class="line">            resize(size * <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 因为 start 是闭区间，所以先左移，再赋值</span></span><br><span class="line">        start = (start - <span class="number">1</span> + size) % size;</span><br><span class="line">        arr[start] = val;</span><br><span class="line">        count++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除数组头部元素，时间复杂度 O(1)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeFirst</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">&quot;Array is empty&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 因为 start 是闭区间，所以先赋值，再右移</span></span><br><span class="line">        arr[start] = <span class="literal">null</span>;</span><br><span class="line">        start = (start + <span class="number">1</span>) % size;</span><br><span class="line">        count--;</span><br><span class="line">        <span class="comment">// 如果数组元素数量减少到原大小的四分之一，则减小数组大小为一半</span></span><br><span class="line">        <span class="keyword">if</span> (count &gt; <span class="number">0</span> &amp;&amp; count == size / <span class="number">4</span>) &#123;</span><br><span class="line">            resize(size / <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在数组尾部添加元素，时间复杂度 O(1)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addLast</span><span class="params">(T val)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isFull()) &#123;</span><br><span class="line">            resize(size * <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 因为 end 是开区间，所以是先赋值，再右移</span></span><br><span class="line">        arr[end] = val;</span><br><span class="line">        end = (end + <span class="number">1</span>) % size;</span><br><span class="line">        count++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除数组尾部元素，时间复杂度 O(1)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeLast</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">&quot;Array is empty&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 因为 end 是开区间，所以先左移，再赋值</span></span><br><span class="line">        end = (end - <span class="number">1</span> + size) % size;</span><br><span class="line">        arr[end] = <span class="literal">null</span>;</span><br><span class="line">        count--;</span><br><span class="line">        <span class="comment">// 缩容</span></span><br><span class="line">        <span class="keyword">if</span> (count &gt; <span class="number">0</span> &amp;&amp; count == size / <span class="number">4</span>) &#123;</span><br><span class="line">            resize(size / <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取数组头部元素，时间复杂度 O(1)</span></span><br><span class="line">    <span class="keyword">public</span> T <span class="title function_">getFirst</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">&quot;Array is empty&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> arr[start];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取数组尾部元素，时间复杂度 O(1)</span></span><br><span class="line">    <span class="keyword">public</span> T <span class="title function_">getLast</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (isEmpty()) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">&quot;Array is empty&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// end 是开区间，指向的是下一个元素的位置，所以要减 1</span></span><br><span class="line">        <span class="keyword">return</span> arr[(end - <span class="number">1</span> + size) % size];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isFull</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> count == size;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">size</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isEmpty</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> count == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Li yalin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

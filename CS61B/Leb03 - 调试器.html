@@ -19,12 +19,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"s-hive.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="Debug BeeCountingStageExpected lines modified: 1跳转到BeeCountingStage.java:54,看到： 1this.input.add(input); 也就是这个类有一个input变量和input局部变量，because &quot;this.input&quot; is null看起来应该是this.input的问题，向上看到： 1234">
+    <meta name="description" content="Debug BeeCountingStageExpected lines modified: 1跳转到BeeCountingStage.java:54,看到： 1this.input.add(input); 也就是这个类有一个input变量和input局部变量，because &quot;this.input&quot; is null看起来应该是this.input的问题，向上看到： 123">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Leb03">
-<meta property="og:url" content="https://s-hive.github.io/CS61B/Leb03">
+<meta property="og:title" content="Leb03 - 调试器">
+<meta property="og:url" content="https://s-hive.github.io/CS61B/Leb03%20-%20%E8%B0%83%E8%AF%95%E5%99%A8">
 <meta property="og:site_name" content="S-hive&#39;s portfolio">
-<meta property="og:description" content="Debug BeeCountingStageExpected lines modified: 1跳转到BeeCountingStage.java:54,看到： 1this.input.add(input); 也就是这个类有一个input变量和input局部变量，because &quot;this.input&quot; is null看起来应该是this.input的问题，向上看到： 1234">
+<meta property="og:description" content="Debug BeeCountingStageExpected lines modified: 1跳转到BeeCountingStage.java:54,看到： 1this.input.add(input); 也就是这个类有一个input变量和input局部变量，because &quot;this.input&quot; is null看起来应该是this.input的问题，向上看到： 123">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250615154243.png">
 <meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250615170843.png">
@@ -41,19 +41,19 @@
 <meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250615223111.png">
 <meta property="og:image" content="https://s-hive.github.io/images/Pastedimage20250615230527.png">
 <meta property="article:published_time" content="2025-06-14T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-06-28T03:58:56.375Z">
+<meta property="article:modified_time" content="2025-09-04T08:27:17.132Z">
 <meta property="article:author" content="Li yalin">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://s-hive.github.io/images/Pastedimage20250615154243.png">
 
 
-<link rel="canonical" href="https://s-hive.github.io/CS61B/Leb03">
+<link rel="canonical" href="https://s-hive.github.io/CS61B/Leb03%20-%20%E8%B0%83%E8%AF%95%E5%99%A8">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://s-hive.github.io/CS61B/Leb03","path":"CS61B/Leb03.html","title":"Leb03"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://s-hive.github.io/CS61B/Leb03%20-%20%E8%B0%83%E8%AF%95%E5%99%A8","path":"CS61B/Leb03 - 调试器.html","title":"Leb03 - 调试器"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Leb03 | S-hive's portfolio
+<title>Leb03 - 调试器 | S-hive's portfolio
 </title>
   
 
@@ -118,7 +118,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-cs61b"><a href="/CS61B/" rel="section"><i class="book fa-fw"></i>CS61B</a></li><li class="menu-item menu-item-debug"><a href="/Debug/" rel="section"><i class="bug fa-fw"></i>Debug</a></li><li class="menu-item menu-item-serve"><a href="/Serve/" rel="section"><i class="book fa-fw"></i>Serve</a></li><li class="menu-item menu-item-数据结构"><a href="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="section"><i class="book fa-fw"></i>数据结构</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-cs61b"><a href="/CS61B/" rel="section"><i class="book fa-fw"></i>CS61B</a></li><li class="menu-item menu-item-serve"><a href="/Serve/" rel="section"><i class="book fa-fw"></i>Serve</a></li><li class="menu-item menu-item-数据结构"><a href="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="section"><i class="book fa-fw"></i>数据结构</a></li><li class="menu-item menu-item-debug"><a href="/Debug/" rel="section"><i class="bug fa-fw"></i>Debug</a></li>
   </ul>
 </nav>
 
@@ -161,12 +161,8 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">标签</span>
       </div>
   </nav>
 </div>
@@ -189,7 +185,7 @@
     
     <div class="post-block" lang="zh-CN"><header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">Leb03<a href="https://github.com/s-hive/s-hive.github.io/tree/main/source/_posts/CS61B/Leb03.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+<h1 class="post-title" itemprop="name headline">Leb03 - 调试器<a href="https://github.com/s-hive/s-hive.github.io/tree/main/source/_posts/CS61B/Leb03%20-%20%E8%B0%83%E8%AF%95%E5%99%A8.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
 </h1>
 
 <div class="post-meta-container">
@@ -201,7 +197,7 @@
       
       
       <div class="post-body">
-          <p><img src="/images/Pastedimage20250615154243.png" alt="Pastedimage20250615154243"></p>
+          <p><img src="/images/Pastedimage20250615154243.png" alt="Pastedimage20250615154243"> </p>
 <h3 id="Debug-BeeCountingStage"><a href="#Debug-BeeCountingStage" class="headerlink" title="Debug BeeCountingStage"></a>Debug <code>BeeCountingStage</code></h3><h4 id="Expected-lines-modified-1"><a href="#Expected-lines-modified-1" class="headerlink" title="Expected lines modified: 1"></a>Expected lines modified: 1</h4><p><img src="/images/Pastedimage20250615170843.png" alt="Pasted20image2020250615170843"><br>跳转到<code>BeeCountingStage.java:54</code>,看到：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.input.add(input);</span><br></pre></td></tr></table></figure>
 <p>也就是这个类有一个input变量和input局部变量，<code>because &quot;this.input&quot; is null</code>看起来应该是<code>this.input</code>的问题，向上看到：</p>
