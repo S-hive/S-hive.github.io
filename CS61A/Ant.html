@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"s-hive.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="这个proj总体来说不难，属于谜底就在谜面上  Problem 1 (1 pt)Part A:    为HarvesterAnt和ThrowerAnt类添加两个类属性food_cost,health ，直接在类名下添加就好了，这里就不写出来了 Part B：    为HarvesterAnt实现action方法，使蚁巢的食物加1 123456789101112131415class Harvest">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ant">
+<meta property="og:url" content="https://s-hive.github.io/CS61A/Ant">
+<meta property="og:site_name" content="S-hive&#39;s portfolio">
+<meta property="og:description" content="这个proj总体来说不难，属于谜底就在谜面上  Problem 1 (1 pt)Part A:    为HarvesterAnt和ThrowerAnt类添加两个类属性food_cost,health ，直接在类名下添加就好了，这里就不写出来了 Part B：    为HarvesterAnt实现action方法，使蚁巢的食物加1 123456789101112131415class Harvest">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-11-27T14:13:24.522Z">
+<meta property="article:modified_time" content="2025-11-27T14:13:24.522Z">
+<meta property="article:author" content="Li yalin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://s-hive.github.io/CS61A/Ant">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://s-hive.github.io/CS61A/Ant","path":"CS61A/Ant.html","title":"Ant"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Ant | S-hive's portfolio
+</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">S-hive's portfolio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-cs61b"><a href="/CS61B/" rel="section"><i class="book fa-fw"></i>CS61B</a></li><li class="menu-item menu-item-serve"><a href="/Serve/" rel="section"><i class="book fa-fw"></i>Serve</a></li><li class="menu-item menu-item-数据结构"><a href="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="section"><i class="book fa-fw"></i>数据结构</a></li><li class="menu-item menu-item-debug"><a href="/Debug/" rel="section"><i class="bug fa-fw"></i>Debug</a></li><li class="menu-item menu-item-老年病人压疮护理的研究动态"><a href="/%E8%80%81%E5%B9%B4%E7%97%85%E4%BA%BA%E5%8E%8B%E7%96%AE%E6%8A%A4%E7%90%86%E7%9A%84%E7%A0%94%E7%A9%B6%E5%8A%A8%E6%80%81/" rel="section">老年病人压疮护理的研究动态</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-1-1-pt"><span class="nav-number">1.</span> <span class="nav-text">Problem 1 (1 pt)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-2-1-pt"><span class="nav-number">2.</span> <span class="nav-text">Problem 2 (1 pt)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-3-2-pt"><span class="nav-number">3.</span> <span class="nav-text">Problem 3 (2 pt)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-4-2-pt"><span class="nav-number">4.</span> <span class="nav-text">Problem 4 (2 pt)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-5-3-pt"><span class="nav-number">5.</span> <span class="nav-text">Problem 5 (3 pt)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-6-1-pt"><span class="nav-number">6.</span> <span class="nav-text">Problem 6 (1 pt)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-7-3-pt"><span class="nav-number">7.</span> <span class="nav-text">Problem 7 (3 pt)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-8-3-pt"><span class="nav-number">8.</span> <span class="nav-text">Problem 8 (3 pt)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem-8a"><span class="nav-number">8.1.</span> <span class="nav-text">Problem 8a</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem-8b"><span class="nav-number">8.2.</span> <span class="nav-text">Problem 8b</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Problem-8c"><span class="nav-number">8.3.</span> <span class="nav-text">Problem 8c</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Problem-9-2-pt"><span class="nav-number">9.</span> <span class="nav-text">Problem 9 (2 pt)</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Li yalin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">Ant<a href="https://github.com/s-hive/s-hive.github.io/tree/main/source/_posts/CS61A/Ant.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>这个proj总体来说不难，属于谜底就在谜面上</p>
+<hr>
+<h3 id="Problem-1-1-pt"><a href="#Problem-1-1-pt" class="headerlink" title="Problem 1 (1 pt)"></a>Problem 1 (1 pt)</h3><p><strong>Part A</strong>:    为<code>HarvesterAnt</code>和<code>ThrowerAnt</code>类添加两个类属性<code>food_cost</code>,<code>health</code> ，直接在类名下添加就好了，这里就不写出来了</p>
+<p><strong>Part B</strong>：    为<code>HarvesterAnt</code>实现<code>action</code>方法，使蚁巢的食物加1</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">HarvesterAnt</span>(Ant):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;收获蚁(HarvesterAnt)每回合为蚁群多生产1单位食物。&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    name = <span class="string">&#x27;Harvester&#x27;</span></span><br><span class="line">    implemented = <span class="type">True</span></span><br><span class="line">    <span class="variable">food_cost</span> <span class="operator">=</span> <span class="number">2</span></span><br><span class="line">    health = <span class="number">1</span></span><br><span class="line">    # OVERRIDE CLASS ATTRIBUTES HER</span><br><span class="line">    def <span class="title function_">action</span><span class="params">(self, gamestate: GameState)</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Produce 1 additional food for the colony.</span></span><br><span class="line"><span class="string">        gamestate -- The GameState, used to access game state information.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        # BEGIN Problem <span class="number">1</span></span><br><span class="line">        gamestate.food += <span class="number">1</span></span><br><span class="line">        # END Problem <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Problem-2-1-pt"><a href="#Problem-2-1-pt" class="headerlink" title="Problem 2 (1 pt)"></a>Problem 2 (1 pt)</h3><p>完善 <code>Place.__init__</code>, 添加两个指针，标志前后，整个路程的开端从蚁巢开始，我们通过<br><code>self.exit</code>来寻找<code>self.entrance</code>如果<code>place</code> 刚刚被创建（<code>Bee</code>仍在巢穴里）此时<code>self.exit</code>和<code>self.entrance</code>都被设置为<code>None</code>，只有<code>Bee</code>在战场中，才标记他们</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (self.exit != None) :</span><br><span class="line">            exit.entrance = self</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.entrance = None</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>为什么<code>place</code> 刚刚被创建时<code>self.exit</code>和<code>self.entrance</code>都被设置为<code>None</code>？</strong><br>从这两个参数的功能来，上来说，它们的所指的都应该是战场上的方位，而不会包括它们巢穴的方位。那从后文的实现上来看，在后文中投掷蚁它是需要通过<code>Bee.entrance</code>来实现向前探寻的动作。然而它们不会攻击到这个蚁巢的位置(<code>Bee</code>在巢穴中被保护)。<br>相应的从代码来看， <code>Bee</code>的父类是<code>Insect</code>， 而 <code>Insect</code> 它需要传入一个 <code>place</code> 参数，但是 <code>Bee</code>类 并没有要传入一个<code> place</code> 参数，所以在 <code>Bee</code> 刚创建时 <code>place</code> 参数这一块就一定是<code>None</code>。只有在在 ‘Bee’ 被放置在战场上时，它这个参数才会有效，从而产生 <code>Bee.entrance</code> 和<code>Bee.exit</code>这两个位置。</p>
+</blockquote>
+<blockquote>
+<p>为什么<code>self.exit</code>是<code>Bee</code>的前一个位置，那<code>self.entrance</code>不指向<code>Bee</code> 的后一个位置？<br>我刚开始觉得<code>Bee</code>不会后退，所以不需要<code>self.entrance</code>指向<code>Bee</code> 的后一个位置，后来一想，如果这样的话，<code>self.entrance</code>本身就没有任何意义了，知道我完成这个proj，我才理解到其中的精妙，我不直接给出答案，先给一个提示：在后文中投掷蚁它是需要通过<code>Bee.entrance</code>来实现向前探寻的动作。所以，如果<code>self.entrance</code>指向<code>Bee</code> 的后一个位置，<code>self.exit</code>和<code>self.entrance</code>的联系就断开了，那就没法通过<code>place.entrance</code>访问了</p>
+</blockquote>
+<h3 id="Problem-3-2-pt"><a href="#Problem-3-2-pt" class="headerlink" title="Problem 3 (2 pt)"></a>Problem 3 (2 pt)</h3><p>这里根据所说的写就行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    def <span class="title function_">nearest_bee</span><span class="params">(self)</span> -&gt; Bee | None:</span><br><span class="line">        p = self.place</span><br><span class="line">        <span class="keyword">while</span> p.is_hive == False:</span><br><span class="line">            bee = random_bee(p.bees)</span><br><span class="line">            <span class="keyword">if</span>  bee != None:</span><br><span class="line">                <span class="keyword">return</span> bee</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                p = p.entrance</span><br><span class="line">        <span class="keyword">return</span> None</span><br></pre></td></tr></table></figure>
+
+<h3 id="Problem-4-2-pt"><a href="#Problem-4-2-pt" class="headerlink" title="Problem 4 (2 pt)"></a>Problem 4 (2 pt)</h3><p>实现<code>ShortThrower</code>和<code>LongThrower</code>类，就是加上类实例就好</p>
+<h3 id="Problem-5-3-pt"><a href="#Problem-5-3-pt" class="headerlink" title="Problem 5 (3 pt)"></a>Problem 5 (3 pt)</h3><p>这里要求重写父类的<code>reduce_health</code> 方法，就是在原来的方法的基础上加上死亡后的反伤逻辑</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">    def <span class="title function_">reduce_health</span><span class="params">(self, amount: <span class="type">float</span>)</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;Reduce health by AMOUNT, and remove the FireAnt from its place if it</span></span><br><span class="line"><span class="string">        has no health remaining.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        # BEGIN Problem <span class="number">5</span></span><br><span class="line">        p = self.place</span><br><span class="line">        <span class="title function_">super</span><span class="params">()</span>.reduce_health(amount)</span><br><span class="line">        <span class="keyword">if</span> self.health &lt;= <span class="number">0</span>:</span><br><span class="line">            amount += self.damage</span><br><span class="line">        <span class="keyword">if</span> p.bees != None:</span><br><span class="line">            <span class="keyword">for</span> bee in p.bees[:]:     </span><br><span class="line">                bee.reduce_health(amount)</span><br></pre></td></tr></table></figure>
+
+<h3 id="Problem-6-1-pt"><a href="#Problem-6-1-pt" class="headerlink" title="Problem 6 (1 pt)"></a>Problem 6 (1 pt)</h3><p>这个按照要求写一个类头，类名，构造方法就行。</p>
+<h3 id="Problem-7-3-pt"><a href="#Problem-7-3-pt" class="headerlink" title="Problem 7 (3 pt)"></a>Problem 7 (3 pt)</h3><p>一个 <code>HungryAnt</code> 必须花费 3 轮咀嚼才能再次进食，就是需要一个实例属性标记咀嚼剩余的次数(<code>self.cooldown</code>)，一个类属性标记咀嚼总共所需的时间(<code>chew_cooldown</code>)。<br>如果咀嚼次数不为0就不攻击，同时剩余次数减1，否则就攻击</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">HungryAnt</span>(Ant):</span><br><span class="line"></span><br><span class="line">    implemented = <span class="type">True</span></span><br><span class="line">    <span class="variable">food_cost</span> <span class="operator">=</span> <span class="number">4</span></span><br><span class="line">    name = <span class="string">&#x27;Hungry&#x27;</span></span><br><span class="line">    chew_cooldown = <span class="number">3</span></span><br><span class="line">    def <span class="title function_">__init__</span><span class="params">(self, health = <span class="number">1</span>)</span>:</span><br><span class="line">        <span class="built_in">super</span>().__init__(health)</span><br><span class="line">        self.cooldown = <span class="number">0</span></span><br><span class="line">    def <span class="title function_">action</span><span class="params">(self, gamestate: GameState)</span>:</span><br><span class="line">        <span class="keyword">if</span> self.cooldown != <span class="number">0</span>:</span><br><span class="line">            self.cooldown -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            bee = self.place.bees</span><br><span class="line">            <span class="keyword">if</span> bee == []:</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                Abee = random_bee(bee)</span><br><span class="line">                Abee.reduce_health(Abee.health)</span><br><span class="line">                self.cooldown = self.chew_cooldown</span><br></pre></td></tr></table></figure>
+
+<h3 id="Problem-8-3-pt"><a href="#Problem-8-3-pt" class="headerlink" title="Problem 8 (3 pt)"></a>Problem 8 (3 pt)</h3><h4 id="Problem-8a"><a href="#Problem-8a" class="headerlink" title="Problem 8a"></a>Problem 8a</h4><p>有三个方法需要编写：</p>
+<ul>
+<li><code>store_ant</code>方法：如果<code>ContainerAnt</code>可以容纳另一个<code>Ant</code>,就将<code>ant_contained</code>设为传入的<code>Ant</code>。</li>
+<li><code>action</code>方法：若当前<code>ContainerAnt</code>有容纳<code>Ant</code>，则执行<code>Ant</code>的攻击。</li>
+<li><code>can_contain</code>方法：接受<code>other</code>为参数，满足以下 2 个条件时返回<code>True</code>：①当前<code>ContainerAnt</code>未包含其他蚂蚁；②<code>other</code>不是容器<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">    def <span class="title function_">can_contain</span><span class="params">(self, other: Ant)</span> -&gt; bool:</span><br><span class="line">        # BEGIN Problem 8a</span><br><span class="line">        <span class="string">&quot;*** YOUR CODE HERE ***&quot;</span></span><br><span class="line">        <span class="keyword">if</span> self.ant_contained == None and other.is_container == False:</span><br><span class="line">            <span class="keyword">return</span> True</span><br><span class="line">        <span class="keyword">return</span> False</span><br><span class="line">        # END Problem 8a</span><br><span class="line"> </span><br><span class="line">    def <span class="title function_">store_ant</span><span class="params">(self, ant: Ant)</span>:</span><br><span class="line">        # BEGIN Problem 8a</span><br><span class="line">        <span class="string">&quot;*** YOUR CODE HERE ***&quot;</span></span><br><span class="line">        <span class="keyword">if</span> self.can_contain(ant):</span><br><span class="line">            self.ant_contained = ant</span><br><span class="line">        # END Problem 8a</span><br><span class="line">        </span><br><span class="line">def <span class="title function_">action</span><span class="params">(self, gamestate: GameState)</span>:</span><br><span class="line">        # BEGIN Problem 8a</span><br><span class="line">        <span class="string">&quot;*** YOUR CODE HERE ***&quot;</span></span><br><span class="line">        <span class="keyword">if</span> self.ant_contained != None:</span><br><span class="line">            self.ant_contained.action(gamestate)</span><br><span class="line">        # END Problem 8a</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h4 id="Problem-8b"><a href="#Problem-8b" class="headerlink" title="Problem 8b"></a>Problem 8b</h4><p>实现<code>Ant.add_to</code> 方法，按照说明做就好。可以想一想为什么如果有两个<code>Ant</code>类，<code>place</code>会链接到<code>ContainerAnt</code>类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">    def <span class="title function_">add_to</span><span class="params">(self, place: Place)</span>:</span><br><span class="line">        <span class="keyword">if</span> place.ant is None:</span><br><span class="line">            place.ant = self</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            # BEGIN Problem 8b</span><br><span class="line">            <span class="keyword">if</span> self.is_container == True and self.can_contain(place.ant):</span><br><span class="line">                self.store_ant(place.ant)</span><br><span class="line">                place.ant = self</span><br><span class="line">                Insect.add_to(self, place)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            elif place.ant.is_container == True and place.ant.can_contain(self):</span><br><span class="line">                place.ant.store_ant(self)</span><br><span class="line">                Insect.add_to(self, place)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">assert</span> place.ant is None, <span class="string">&#x27;Too many ants in &#123;0&#125;&#x27;</span>.format(place)</span><br><span class="line">            # END Problem 8b</span><br></pre></td></tr></table></figure>
+
+<h4 id="Problem-8c"><a href="#Problem-8c" class="headerlink" title="Problem 8c"></a>Problem 8c</h4><p>实现<code>ProtectorAnt</code> 类，注意它继承自<code>ContainerAnt</code>,否则刚刚写的方法不就没用了嘛</p>
+<h3 id="Problem-9-2-pt"><a href="#Problem-9-2-pt" class="headerlink" title="Problem 9 (2 pt)"></a>Problem 9 (2 pt)</h3><p><code>TankAnt</code>就是起到一个血包的作用，比较有意思的是<code>它保护它所在位置的一只蚂蚁</code>,就是说如果它还有血，攻击就会先让它扣血，如何实现它呢，我一开始想到的是直接修改<code>Bee</code>的攻击方法，在攻击前判断是否有多个<code>Ant</code>类，如果有就找出<code>ContainerAnt</code>类，就是检查它们的<code>is_container</code>类属性，最后在对其攻击，但是这样会很麻烦，需要有一个方法跟踪每一个<code>Ant</code>的数量，而且每一轮都要更新，每个<code>Ant</code> 都要记住自己的位置，要修改<code>Ant</code>的<code>add_to</code>和<code>remove</code>方法，但是这里却很好的避免了这些麻烦，就是上面的<code>place</code>会优先链接到<code>ContainerAnt</code>类的做法，这样就实现了优先攻击，那如果<code>ContainerAnt</code>死亡，怎么把攻击转移到被保护的<code>Ant</code>类呢？就靠<code>ContainerAnt</code>的<code>ant_contained</code>实例属性了，不过当前问题不会涉及到这个。<br>代码不是很难我就不放出来了。</p>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Li yalin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

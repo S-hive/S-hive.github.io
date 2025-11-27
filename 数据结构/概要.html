@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"s-hive.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.23.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="char 转 String：String.valueOf(&#39;a&#39;) 或 Character.toString(&#39;a&#39;) String 转 char（单个字符）：&quot;abc&quot;.charAt(0)（返回 &#39;a&#39;） String 转 char[]：&quot;abc&quot;.toCharArray()（返回字符数组）  String">
+<meta property="og:type" content="website">
+<meta property="og:title" content="S-hive&#39;s portfolio">
+<meta property="og:url" content="https://s-hive.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A6%82%E8%A6%81">
+<meta property="og:site_name" content="S-hive&#39;s portfolio">
+<meta property="og:description" content="char 转 String：String.valueOf(&#39;a&#39;) 或 Character.toString(&#39;a&#39;) String 转 char（单个字符）：&quot;abc&quot;.charAt(0)（返回 &#39;a&#39;） String 转 char[]：&quot;abc&quot;.toCharArray()（返回字符数组）  String">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-09-17T05:55:27.874Z">
+<meta property="article:modified_time" content="2025-09-17T05:55:27.874Z">
+<meta property="article:author" content="Li yalin">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://s-hive.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A6%82%E8%A6%81">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":true,"permalink":"https://s-hive.github.io/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A6%82%E8%A6%81","path":"数据结构/概要.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | S-hive's portfolio
+</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">S-hive's portfolio</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-cs61b"><a href="/CS61B/" rel="section"><i class="book fa-fw"></i>CS61B</a></li><li class="menu-item menu-item-serve"><a href="/Serve/" rel="section"><i class="book fa-fw"></i>Serve</a></li><li class="menu-item menu-item-数据结构"><a href="/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="section"><i class="book fa-fw"></i>数据结构</a></li><li class="menu-item menu-item-debug"><a href="/Debug/" rel="section"><i class="bug fa-fw"></i>Debug</a></li><li class="menu-item menu-item-老年病人压疮护理的研究动态"><a href="/%E8%80%81%E5%B9%B4%E7%97%85%E4%BA%BA%E5%8E%8B%E7%96%AE%E6%8A%A4%E7%90%86%E7%9A%84%E7%A0%94%E7%A9%B6%E5%8A%A8%E6%80%81/" rel="section">老年病人压疮护理的研究动态</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#String-%E7%B1%BB%EF%BC%9A"><span class="nav-number">1.</span> <span class="nav-text">String 类：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84%E7%9A%84%E5%9F%BA%E6%9C%AC-API"><span class="nav-number">2.</span> <span class="nav-text">动态数组的基本 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E5%85%B8"><span class="nav-number">3.</span> <span class="nav-text">字典</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84"><span class="nav-number">4.</span> <span class="nav-text">动态数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedList%E6%A0%B8%E5%BF%83API%EF%BC%88%E5%8F%8C%E9%93%BE%E8%A1%A8%E7%89%B9%E6%80%A7%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">LinkedList核心API（双链表特性）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%9F%E5%88%97%E7%9A%84%E5%9F%BA%E6%9C%AC-API"><span class="nav-number">6.</span> <span class="nav-text">队列的基本 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88%E7%9A%84%E5%9F%BA%E6%9C%AC-API"><span class="nav-number">7.</span> <span class="nav-text">栈的基本 API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-%E6%8E%A5%E5%8F%A3%EF%BC%88HashSet-LinkedHashSet-TreeSet-%E9%80%9A%E7%94%A8%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">Set 接口（HashSet&#x2F;LinkedHashSet&#x2F;TreeSet 通用）</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Li yalin</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"><a href="https://github.com/s-hive/s-hive.github.io/tree/main/source/_posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E6%A6%82%E8%A6%81.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <ul>
+<li><code>char</code> 转 <code>String</code>：<code>String.valueOf(&#39;a&#39;)</code> 或 <code>Character.toString(&#39;a&#39;)</code></li>
+<li><code>String</code> 转 <code>char</code>（单个字符）：<code>&quot;abc&quot;.charAt(0)</code>（返回 <code>&#39;a&#39;</code>）</li>
+<li><code>String</code> 转 <code>char[]</code>：<code>&quot;abc&quot;.toCharArray()</code>（返回字符数组）</li>
+</ul>
+<h2 id="String-类："><a href="#String-类：" class="headerlink" title="String 类："></a><code>String</code> 类：</h2><p>  <code>String.valueOf(t.charAt(i))</code> 是 Java 中将 <code>char</code> 类型转换为 <code>String</code> 类型的常用方法，作用是把一个字符转换为对应的字符串对象。</p>
+<ol>
+<li><p><strong>长度与判断</strong></p>
+<ul>
+<li><code>length()</code>：返回字符串长度</li>
+<li><code>isEmpty()</code>：判断是否为空字符串</li>
+</ul>
+</li>
+<li><p><strong>字符访问</strong></p>
+<ul>
+<li><code>charAt(int index)</code>：返回指定索引位置的字符</li>
+<li><code>toCharArray()</code>：转为字符数组</li>
+</ul>
+</li>
+<li><p><strong>截取与分割</strong></p>
+<ul>
+<li><code>substring(int start)</code>：从 start 截取到末尾</li>
+<li><code>substring(int start, int end)</code>：截取 <code>[start, end) 区间</code></li>
+<li><code>split(String regex)</code>：按正则分割为字符串数组</li>
+</ul>
+</li>
+<li><p><strong>查找与比较</strong></p>
+<ul>
+<li><code>indexOf(String str)</code>：查找子串首次出现位置</li>
+<li><code>lastIndexOf(String str)</code>：查找子串最后出现位置</li>
+<li><code>equals(Object obj)</code>：比较内容是否相等</li>
+<li><code>equalsIgnoreCase(String str)</code>：忽略大小写比较</li>
+</ul>
+</li>
+<li><p><strong>转换</strong></p>
+<ul>
+<li><code>toLowerCase()</code>：转小写</li>
+<li><code>toUpperCase()</code>：转大写</li>
+<li><code>trim()</code>：去除首尾空格（Java 11+ 可用 <code>strip()</code> 更完善）</li>
+</ul>
+</li>
+<li><p><strong>其他常用</strong></p>
+<ul>
+<li><code>contains(CharSequence s)</code>：是否包含指定序列</li>
+<li><code>startsWith(String prefix)</code>：是否以指定前缀开头</li>
+<li><code>endsWith(String suffix)</code>：是否以指定后缀结尾</li>
+<li><code>replace(char old, char new)</code>：替换字符</li>
+<li><code>valueOf(任意类型)</code>：静态方法，将其他类型转为字符串</li>
+</ul>
+</li>
+</ol>
+<h2 id="动态数组的基本-API"><a href="#动态数组的基本-API" class="headerlink" title="动态数组的基本 API"></a>动态数组的基本 API</h2><p>class MyArrayList {</p>
+<p>&#x2F;&#x2F; 向数组末尾添加元素，时间复杂度 O(1)（无扩容时），O(n)（需扩容时，需复制数组）</p>
+<p>void add(E e);</p>
+<p>&#x2F;&#x2F; 向指定索引位置插入元素，后续元素自动后移，时间复杂度 O(n)（需移动索引后元素）</p>
+<p>void add(int index, E e);</p>
+<p>&#x2F;&#x2F; 删除指定索引位置的元素，返回被删除元素，后续元素自动前移，时间复杂度 O(n)</p>
+<p>E remove(int index);</p>
+<p>&#x2F;&#x2F; 删除第一个与目标元素相等的元素，删除成功返回 true，否则返回 false，时间复杂度 O(n)</p>
+<p>boolean remove(E e);</p>
+<p>&#x2F;&#x2F; 获取指定索引位置的元素，时间复杂度 O(1)（数组随机访问特性）</p>
+<p>E get(int index);</p>
+<p>&#x2F;&#x2F; 替换指定索引位置的元素，返回被替换的旧元素，时间复杂度 O(1)</p>
+<p>E set(int index, E e);</p>
+<p>&#x2F;&#x2F; 判断数组是否包含目标元素，包含返回 true，否则返回 false，时间复杂度 O(n)</p>
+<p>boolean contains(E e);</p>
+<p>&#x2F;&#x2F; 返回动态数组中元素的总个数，时间复杂度 O(1)</p>
+<p>int size();</p>
+<p>&#x2F;&#x2F; 判断动态数组是否为空（元素个数为 0），返回 true 或 false，时间复杂度 O(1)</p>
+<p>boolean isEmpty();</p>
+<p>&#x2F;&#x2F; 清空数组中所有元素（重置元素个数，不改变底层数组容量），时间复杂度 O(1)</p>
+<p>void clear();</p>
+<p>&#x2F;&#x2F; 将动态数组转换为指定类型的数组，时间复杂度 O(n)（需遍历复制元素）</p>
+<p>E[] toArray(E[] a);</p>
+<p>&#x2F;&#x2F; 手动指定数组最小容量，避免后续频繁扩容，时间复杂度 O(1)（无需扩容时），O(n)（需扩容时）</p>
+<p>void ensureCapacity(int minCapacity);</p>
+<p>&#x2F;&#x2F; 将数组容量压缩至与当前元素个数一致，节省内存，时间复杂度 O(n)（需复制元素到新数组）</p>
+<p>void trimToSize();</p>
+<p>}</p>
+<h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><p>字典” 功能主要通过<code>java.util.Map</code>接口及其实现类来提供。<code>Map</code>用于存储键值对（key-value pairs），其中每个键是唯一的，通过键可以快速查找对应的值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建字典</span></span><br><span class="line">Map&lt;K, V&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 基本操作</span></span><br><span class="line">map.put(key, value);       <span class="comment">// 添加/修改键值对</span></span><br><span class="line">map.get(key);              <span class="comment">// 根据键获取值</span></span><br><span class="line">map.getOrDefault(Object key, V defaultValue) <span class="comment">//- 当 `Map` 中存在指定的 `key` 时，返回该键对应的 value;不存在时，返回参数中指定的 `defaultValue`</span></span><br><span class="line">map.remove(key);           <span class="comment">// 根据键删除</span></span><br><span class="line">map.containsKey(key);      <span class="comment">// 判断是否包含键</span></span><br><span class="line">map.containsValue(value);  <span class="comment">// 判断是否包含值</span></span><br><span class="line">map.size();                <span class="comment">// 获取大小</span></span><br><span class="line">map.isEmpty();             <span class="comment">// 判断是否为空</span></span><br><span class="line">map.clear();               <span class="comment">// 清空所有元素</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 遍历相关</span></span><br><span class="line">map.keySet();              <span class="comment">// 获取所有键的集合</span></span><br><span class="line">map.values();              <span class="comment">// 获取所有值的集合</span></span><br><span class="line">map.entrySet();            <span class="comment">// 获取所有键值对的集合</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="动态数组"><a href="#动态数组" class="headerlink" title="动态数组"></a>动态数组</h2><p>在Java中，动态数组的核心实现类是 java.util.ArrayList **，其API围绕动态扩容、元素增删改查等操作设计，核心方法如下：</p>
+<ol>
+<li>构造方法（初始化）</li>
+</ol>
+<ul>
+<li><p> new ArrayList&lt;&gt;() ：创建空的ArrayList（初始容量10，扩容时自动翻倍）。</p>
+</li>
+<li><p> new ArrayList&lt;&gt;(int initialCapacity) ：指定初始容量（避免频繁扩容，适合已知大致元素数量的场景）。</p>
+</li>
+<li><p> <code>new ArrayList&lt;&gt;(Collection&lt;? extends E&gt; c)</code> ：通过其他集合（如List、Set）初始化。</p>
+</li>
+<li><p> add(E e) ：尾插元素</p>
+</li>
+<li><p> add(int index, E e) ：指定索引插入元素</p>
+</li>
+<li><p> remove(int index) ：删除指定索引元素，返回被删元素</p>
+</li>
+<li><p> remove(Object o) ：删除首个匹配元素，返回是否成功</p>
+</li>
+<li><p> get(int index) ：获取指定索引元素</p>
+</li>
+<li><p> set(int index, E e) ：替换指定索引元素，返回旧值</p>
+</li>
+<li><p> size() ：返回元素个数</p>
+</li>
+<li><p> isEmpty() ：判断是否为空</p>
+</li>
+<li><p> contains(Object o) ：判断是否包含指定元素</p>
+</li>
+</ul>
+<p>Java中无专门的“双链表”接口，但 java.util.LinkedList 是底层基于双向链表的实现类（实现 List 和 Deque 接口），完全具备双链表的所有特性（头尾节点双向引用、双向遍历、头尾操作O(1)）。以下是其核心API（按功能分类，突出双链表特性）：</p>
+<h2 id="LinkedList核心API（双链表特性）"><a href="#LinkedList核心API（双链表特性）" class="headerlink" title="LinkedList核心API（双链表特性）"></a>LinkedList核心API（双链表特性）</h2><p>&#x2F;&#x2F; 构造方法</p>
+<ul>
+<li><p> LinkedList&lt;&gt;() ：创建一个空的双向链表。</p>
+</li>
+<li><p><code>LinkedList&lt;&gt;(Collection&lt;? extends E&gt; c)</code>：通过已有集合（如List、Set）初始化双向链表，元素顺序与集合一致。</p>
+</li>
+</ul>
+<p>&#x2F;&#x2F; 双链表的基本 API</p>
+<p>class MyDoublyLinkedList {</p>
+<p>&#x2F;&#x2F; 向链表头部插入元素，时间复杂度 O(1)</p>
+<p>void addFirst(E e);</p>
+<p>&#x2F;&#x2F; 向链表尾部插入元素，时间复杂度 O(1)</p>
+<p>void addLast(E e);</p>
+<p>&#x2F;&#x2F; 向指定索引位置插入元素，时间复杂度 O(n)（需遍历到目标索引）</p>
+<p>void add(int index, E e);</p>
+<p>&#x2F;&#x2F; 删除并返回链表头部元素，时间复杂度 O(1)</p>
+<p>E removeFirst();</p>
+<p>&#x2F;&#x2F; 删除并返回链表尾部元素，时间复杂度 O(1)</p>
+<p>E removeLast();</p>
+<p>&#x2F;&#x2F; 删除并返回指定索引位置的元素，时间复杂度 O(n)（需遍历到目标索引）</p>
+<p>E remove(int index);</p>
+<p>&#x2F;&#x2F; 删除第一个与目标元素相等的节点，删除成功返回 true，否则返回 false，时间复杂度 O(n)</p>
+<p>boolean remove(E e);</p>
+<p>&#x2F;&#x2F; 获取链表头部元素（不删除），时间复杂度 O(1)</p>
+<p>E getFirst();</p>
+<p>&#x2F;&#x2F; 获取链表尾部元素（不删除），时间复杂度 O(1)</p>
+<p>E getLast();</p>
+<p>&#x2F;&#x2F; 获取指定索引位置的元素，时间复杂度 O(n)（需遍历到目标索引）</p>
+<p>E get(int index);</p>
+<p>&#x2F;&#x2F; 替换指定索引位置的元素，返回被替换的旧元素，时间复杂度 O(n)（需遍历到目标索引）</p>
+<p>E set(int index, E e);</p>
+<p>&#x2F;&#x2F; 判断链表是否包含目标元素，包含返回 true，否则返回 false，时间复杂度 O(n)</p>
+<p>boolean contains(E e);</p>
+<p>&#x2F;&#x2F; 返回链表中元素的总个数，时间复杂度 O(1)</p>
+<p>int size();</p>
+<p>&#x2F;&#x2F; 判断链表是否为空（元素个数为 0），返回 true 或 false，时间复杂度 O(1)</p>
+<p>boolean isEmpty();</p>
+<p>&#x2F;&#x2F; 清空链表中所有元素，时间复杂度 O(1)（仅需置空头尾节点与重置 size）</p>
+<p>void clear();</p>
+<p>}</p>
+<h2 id="队列的基本-API"><a href="#队列的基本-API" class="headerlink" title="队列的基本 API"></a>队列的基本 API</h2><p><code>class MyQueue&lt;E&gt; &#123;</code></p>
+<p>    &#x2F;&#x2F; 向队尾插入元素，时间复杂度 O(1)</p>
+<p>    void push(E e);</p>
+<p>    &#x2F;&#x2F; 从队头删除元素，时间复杂度 O(1)</p>
+<p>    E pop();</p>
+<p>    &#x2F;&#x2F; 查看队头元素，时间复杂度 O(1)</p>
+<p>    E peek();</p>
+<p>    &#x2F;&#x2F; 返回队列中的元素个数，时间复杂度 O(1)</p>
+<p>    int size();</p>
+<p>}</p>
+<h2 id="栈的基本-API"><a href="#栈的基本-API" class="headerlink" title="栈的基本 API"></a>栈的基本 API</h2><p><code>class MyStack&lt;E&gt; &#123;</code></p>
+<p>    &#x2F;&#x2F; 向栈顶插入元素，时间复杂度 O(1)</p>
+<p>    void push(E e);</p>
+<p>    &#x2F;&#x2F; 从栈顶删除元素，时间复杂度 O(1)</p>
+<p>    E pop();</p>
+<p>    &#x2F;&#x2F; 查看栈顶元素，时间复杂度 O(1)</p>
+<p>    E peek();</p>
+<p>    &#x2F;&#x2F; 返回栈中的元素个数，时间复杂度 O(1)</p>
+<p>    int size();</p>
+<p>}</p>
+<h2 id="Set-接口（HashSet-LinkedHashSet-TreeSet-通用）"><a href="#Set-接口（HashSet-LinkedHashSet-TreeSet-通用）" class="headerlink" title="Set 接口（HashSet&#x2F;LinkedHashSet&#x2F;TreeSet 通用）"></a>Set 接口（HashSet&#x2F;LinkedHashSet&#x2F;TreeSet 通用）</h2><ul>
+<li><p> add(E e) ：添加元素（重复则不添加），返回是否成功</p>
+</li>
+<li><p> remove(Object o) ：删除指定元素，返回是否成功</p>
+</li>
+<li><p> size() ：返回元素个数</p>
+</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Li yalin</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
